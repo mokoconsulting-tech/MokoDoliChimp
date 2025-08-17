@@ -1,0 +1,64 @@
+@ -0,0 +1,47 @@
+# Logs and databases
+/logs/
+/tmp/
+
+#Dev related
+build/
+dev/
+scripts/
+
+#Configuration files
+/configuration.php
+/htdocs/conf/*
+
+# Joomla-generated files
+installation/
+/cache/
+/media/com_joomlaupdate/
+
+# Backup files
+*.bak
+*.backup
+/backups/
+
+# Environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Node.js dependencies (if using npm for template development)
+node_modules/
+npm-debug.log*
+
+# Build files
+/dist/
+/build/
+
+# Compiled assets
+*.css.map
+*.js.map
+
+# System files
+desktop.ini
+.DS_Store
+Thumbs.db
+.idea/
+*.sublime-project
+*.sublime-workspace
+sftp-config*.json
+template.sftp-config.json
+sync.ffs_db
+*.ffs_gui
+
+# Editor and IDE files
+.vscode/
+*.swp
+
+# Other
+*.lock
+*conf*.php
+*.back
+*.old
+
+#Custom Config

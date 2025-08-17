@@ -1,0 +1,41 @@
+# EditorConfig helps maintain consistent coding styles across different editors and IDEs
+# https://editorconfig.org/
+
+root = true
+
+# Default settings — Tabs preferred, width = 2 spaces
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = tab
+tab_width = 2
+
+# PowerShell scripts — tabs, 2-space visual width
+[*.ps1]
+indent_style = tab
+tab_width = 2
+end_of_line = crlf
+
+# Markdown files — keep trailing whitespace for line breaks
+[*.md]
+trim_trailing_whitespace = false
+
+# JSON / YAML files — tabs, 2-space visual width
+[*.{json,yml,yaml}]
+indent_style = tab
+tab_width = 2
+
+# Makefiles — always tabs, default width
+[Makefile]
+indent_style = tab
+tab_width = 2
+
+# Windows batch scripts — keep CRLF endings
+[*.{bat,cmd}]
+end_of_line = crlf
+
+# Shell scripts — ensure LF endings
+[*.sh]
+end_of_line = lf
