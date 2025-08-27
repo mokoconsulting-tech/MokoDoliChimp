@@ -1,0 +1,23 @@
+{
+    "name": "mokodolichimp/dolibarr-mailchimp-sync",
+    "description": "MokoDoliChimp - Dolibarr module for bidirectional synchronization with Mailchimp",
+    "type": "dolibarr-module",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "MokoDoliChimp Development Team"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "mailchimp/marketing": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MokoDoliChimp\\": "class/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
