@@ -15,15 +15,15 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "MokoDoliChimp Demo Server"
+args = "Dolibarr Mailchimp Sync"
 
 [[workflows.workflow]]
-name = "MokoDoliChimp Demo Server"
+name = "Dolibarr Mailchimp Sync"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "php -S 0.0.0.0:5000"
+args = "cd htdocs && php -S 0.0.0.0:5000 -t ."
 waitForPort = 5000
 
 [workflows.workflow.metadata]

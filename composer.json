@@ -10,7 +10,11 @@
     ],
     "require": {
         "php": ">=7.4",
-        "mailchimp/marketing": "^3.0"
+        "mailchimp/marketing": "^3.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.1",
+        "psr/http-message": "^2.0",
+        "guzzlehttp/guzzle": "^7.10"
     },
     "autoload": {
         "psr-4": {

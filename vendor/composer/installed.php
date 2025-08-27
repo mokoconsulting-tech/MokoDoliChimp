@@ -3,7 +3,7 @@
         'name' => 'mokodolichimp/dolibarr-mailchimp-sync',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '4f5dc0f90ff130dcfca43305dcdc88484c06523a',
+        'reference' => '498119adeb0957b0b438728e22f7701020169d42',
         'type' => 'dolibarr-module',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'mokodolichimp/dolibarr-mailchimp-sync' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4f5dc0f90ff130dcfca43305dcdc88484c06523a',
+            'reference' => '498119adeb0957b0b438728e22f7701020169d42',
             'type' => 'dolibarr-module',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -1,0 +1,192 @@
+# Mailchimp Sync Module Language File
+# 
+# @file        mailchimpsync.lang
+# @ingroup     mailchimpsync
+# @brief       English language file for Mailchimp sync module
+# @author      Moko Consulting <hello@mokoconsulting.tech>
+# @copyright   2025 Moko Consulting
+# @license     GNU General Public License v3.0 or later
+# @warranty    This program comes with ABSOLUTELY NO WARRANTY. This is free software.
+
+CHARSET=UTF-8
+
+# Module information
+Module999999Name=Mailchimp Sync
+Module999999Desc=Bidirectional synchronization between Dolibarr and Mailchimp for third parties, contacts, and users
+
+# Menu entries
+MailchimpSync=Mailchimp Sync
+Dashboard=Dashboard
+Configuration=Configuration
+FieldMapping=Field Mapping
+SyncHistory=Sync History
+
+# General terms
+Mailchimp=Mailchimp
+Synchronization=Synchronization
+ThirdParties=Third Parties
+Contacts=Contacts
+Users=Users
+Email=Email
+Phone=Phone
+Address=Address
+Birthday=Birthday
+Status=Status
+LastSync=Last Sync
+PendingSync=Pending Sync
+Success=Success
+Error=Error
+Pending=Pending
+Never=Never
+
+# Dashboard
+MailchimpSyncDashboard=Mailchimp Sync Dashboard
+ConnectionStatus=Connection Status
+Connected=Connected
+Disconnected=Disconnected
+MailchimpConnection=Mailchimp Connection
+AutoSyncStatus=Auto Sync Status
+Enabled=Enabled
+Disabled=Disabled
+Interval=Interval
+seconds=seconds
+SyncStatistics=Sync Statistics
+Last24Hours=Last 24 Hours
+TotalSyncs=Total Syncs
+SuccessfulSyncs=Successful Syncs
+FailedSyncs=Failed Syncs
+SuccessRate=Success Rate
+LastSuccess=Last Success
+LastFailure=Last Failure
+EntityType=Entity Type
+NotSynced=Not Synced
+RunManualSync=Run Manual Sync
+RunFullSync=Run Full Sync
+ViewSyncHistory=View Sync History
+ManualSyncCompleted=Manual synchronization completed successfully
+ManualSyncFailed=Manual synchronization failed
+FullSyncCompleted=Full synchronization completed successfully
+FullSyncFailed=Full synchronization failed
+ConfirmFullSync=This will perform a complete synchronization which may take some time. Are you sure?
+
+# Configuration
+MailchimpSyncSetup=Mailchimp Sync Configuration
+MailchimpAPIKey=Mailchimp API Key
+MailchimpServerPrefix=Mailchimp Server Prefix
+DefaultListID=Default List ID
+AutoSync=Auto Sync
+SyncInterval=Sync Interval
+TestConnection=Test Connection
+TestMailchimpConnection=Test Mailchimp Connection
+ConnectionTestSuccess=Connection test successful
+ConnectionTestFailed=Connection test failed
+Save=Save
+BackToModuleList=Back to Module List
+MailchimpSyncInfo=Configure your Mailchimp API settings here. You can find your API key and server prefix in your Mailchimp account settings.
+
+# Field Mapping
+SelectEntityType=Select Entity Type
+DolibarrField=Dolibarr Field
+MailchimpField=Mailchimp Field
+Required=Required
+SyncDirection=Sync Direction
+NotMapped=Not Mapped
+DolibarrToMailchimp=Dolibarr to Mailchimp
+MailchimpToDolibarr=Mailchimp to Dolibarr
+Bidirectional=Bidirectional
+NoSync=No Sync
+SaveMappings=Save Mappings
+ResetMappings=Reset Mappings
+MappingsSaved=Field mappings saved successfully
+ErrorSavingMappings=Error saving field mappings
+MappingsReset=Field mappings reset successfully
+ErrorResettingMappings=Error resetting field mappings
+ConfirmResetMappings=Are you sure you want to reset all field mappings? This action cannot be undone.
+BackToDashboard=Back to Dashboard
+
+# Mapping Tips
+MappingTips=Field Mapping Tips
+MappingTip1=Email field is required for synchronization
+MappingTip2=Bidirectional sync will update data in both systems
+MappingTip3=Use 'Dolibarr to Mailchimp' for one-way sync from Dolibarr
+MappingTip4=Date fields should be mapped to appropriate Mailchimp date fields
+
+# Sync History
+SyncDate=Sync Date
+EntityID=Entity ID
+Message=Message
+ViewFullMessage=View Full Message
+ClearHistory=Clear History
+ClearHistoryOlderThan=Clear history older than
+days=days
+ConfirmClearHistory=Are you sure you want to clear old sync history? This action cannot be undone.
+HistoryCleared=Sync history cleared successfully
+ErrorClearingHistory=Error clearing sync history
+All=All
+
+# Field Labels
+CompanyName=Company Name
+Firstname=First Name
+Lastname=Last Name
+PhonePerso=Personal Phone
+PhoneMobile=Mobile Phone
+PhoneOffice=Office Phone
+Zip=Postal Code
+Town=City
+Country=Country
+Customer=Customer
+Supplier=Supplier
+PostOrFunction=Position/Function
+
+# Error Messages
+APIKeyRequired=Mailchimp API Key is required
+ServerPrefixRequired=Mailchimp Server Prefix is required
+DefaultListRequired=Default List ID is required
+ConnectionFailed=Failed to connect to Mailchimp
+SyncFailed=Synchronization failed
+ConfigurationIncomplete=Mailchimp configuration is incomplete
+NoEmailAddress=No email address found for entity
+
+# Success Messages
+ConfigurationSaved=Configuration saved successfully
+SyncCompleted=Synchronization completed successfully
+ConnectionSuccessful=Connection to Mailchimp successful
+
+# Permissions
+ReadMailchimpSyncData=Read Mailchimp sync data
+CreateUpdateMailchimpSyncData=Create/Update Mailchimp sync data
+DeleteMailchimpSyncData=Delete Mailchimp sync data
+
+# Cron Job
+MailchimpSyncCron=Mailchimp Sync Cron Job
+ScheduledMailchimpSync=Scheduled Mailchimp synchronization
+
+# Contact Types
+ThirdParty=Third Party
+Contact=Contact
+User=User
+
+# Sync Directions
+SyncDirectionBidirectional=Bidirectional
+SyncDirectionDolibarrToMailchimp=Dolibarr → Mailchimp
+SyncDirectionMailchimpToDolibarr=Mailchimp → Dolibarr
+
+# Status Messages
+SyncInProgress=Synchronization in progress...
+SyncQueued=Sync queued for processing
+SyncCompleted=Sync completed
+SyncFailed=Sync failed
+SyncSkipped=Sync skipped
+SyncRetrying=Retrying sync...
+
+# Configuration Sections
+APIConfiguration=API Configuration
+SyncSettings=Sync Settings
+AdvancedSettings=Advanced Settings
+
+# Help Text
+APIKeyHelp=Your Mailchimp API key (found in Account → Extras → API keys)
+ServerPrefixHelp=The server prefix from your API key (e.g., us1, us2, etc.)
+DefaultListHelp=The default list ID where contacts will be synced
+AutoSyncHelp=Enable automatic synchronization when entities are created or modified
+SyncIntervalHelp=How often to run scheduled synchronization (in seconds)

@@ -1,0 +1,415 @@
+/**
+ * Mailchimp Sync Module CSS
+ * 
+ * @file        mailchimpsync.css
+ * @ingroup     mailchimpsync
+ * @brief       CSS styles for Mailchimp sync module
+ * @author      Moko Consulting <hello@mokoconsulting.tech>
+ * @copyright   2025 Moko Consulting
+ * @license     GNU General Public License v3.0 or later
+ * @warranty    This program comes with ABSOLUTELY NO WARRANTY. This is free software.
+ */
+
+/* Dashboard specific styles */
+.mailchimpsync-dashboard {
+    padding: 20px 0;
+}
+
+.mailchimpsync-stats-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.mailchimpsync-stats-card h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.mailchimpsync-stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.mailchimpsync-stats-row:last-child {
+    border-bottom: none;
+}
+
+.mailchimpsync-stats-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.mailchimpsync-stats-value {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Connection status indicators */
+.mailchimpsync-status-connected {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.mailchimpsync-status-disconnected {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.mailchimpsync-status-pending {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+/* Sync history table enhancements */
+.mailchimpsync-history-table {
+    margin-top: 20px;
+}
+
+.mailchimpsync-history-table .status-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.mailchimpsync-history-table .status-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.mailchimpsync-history-table .status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Field mapping interface */
+.mailchimpsync-mapping-form {
+    margin-top: 20px;
+}
+
+.mailchimpsync-mapping-row {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.mailchimpsync-mapping-row:last-child {
+    border-bottom: none;
+}
+
+.mailchimpsync-mapping-field {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.mailchimpsync-mapping-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.mailchimpsync-mapping-field select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
+
+.mailchimpsync-mapping-help {
+    font-size: 12px;
+    color: #666;
+    margin-top: 3px;
+}
+
+/* Quick action buttons */
+.mailchimpsync-actions {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.mailchimpsync-actions .button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.mailchimpsync-actions .button-primary {
+    background: #007cba;
+    color: white;
+}
+
+.mailchimpsync-actions .button-primary:hover {
+    background: #005a87;
+}
+
+.mailchimpsync-actions .button-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.mailchimpsync-actions .button-secondary:hover {
+    background: #545b62;
+}
+
+.mailchimpsync-actions .button-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.mailchimpsync-actions .button-danger:hover {
+    background: #c82333;
+}
+
+/* Progress indicators */
+.mailchimpsync-progress {
+    background: #f8f9fa;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.mailchimpsync-progress-bar {
+    height: 20px;
+    background: linear-gradient(90deg, #007cba, #0056b3);
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: width 0.3s ease;
+}
+
+/* Alert messages */
+.mailchimpsync-alert {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.mailchimpsync-alert-success {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+}
+
+.mailchimpsync-alert-error {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+.mailchimpsync-alert-warning {
+    background: #fff3cd;
+    border-color: #ffc107;
+    color: #856404;
+}
+
+.mailchimpsync-alert-info {
+    background: #d1ecf1;
+    border-color: #17a2b8;
+    color: #0c5460;
+}
+
+/* Configuration form enhancements */
+.mailchimpsync-config-section {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.mailchimpsync-config-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    font-weight: 600;
+    color: #333;
+}
+
+.mailchimpsync-config-body {
+    padding: 20px;
+}
+
+.mailchimpsync-form-group {
+    margin-bottom: 20px;
+}
+
+.mailchimpsync-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.mailchimpsync-form-group input,
+.mailchimpsync-form-group select,
+.mailchimpsync-form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.mailchimpsync-form-group input:focus,
+.mailchimpsync-form-group select:focus,
+.mailchimpsync-form-group textarea:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
+}
+
+/* Test connection button */
+.mailchimpsync-test-connection {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.mailchimpsync-test-connection:hover {
+    background: #138496;
+}
+
+/* Loading spinner */
+.mailchimpsync-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 124, 186, 0.3);
+    border-radius: 50%;
+    border-top-color: #007cba;
+    animation: mailchimpsync-spin 1s ease-in-out infinite;
+}
+
+@keyframes mailchimpsync-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Entity type tabs */
+.mailchimpsync-entity-tabs {
+    display: flex;
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.mailchimpsync-entity-tab {
+    padding: 12px 24px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: #6c757d;
+    text-decoration: none;
+    margin-right: 2px;
+    border-radius: 6px 6px 0 0;
+    transition: all 0.3s ease;
+}
+
+.mailchimpsync-entity-tab:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.mailchimpsync-entity-tab.active {
+    background: white;
+    color: #007cba;
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .mailchimpsync-mapping-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .mailchimpsync-mapping-field {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .mailchimpsync-actions {
+        flex-direction: column;
+    }
+    
+    .mailchimpsync-entity-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .mailchimpsync-entity-tab {
+        margin-right: 0;
+        margin-bottom: 2px;
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .mailchimpsync-stats-card {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .mailchimpsync-stats-card h3 {
+        color: #e2e8f0;
+    }
+    
+    .mailchimpsync-stats-label {
+        color: #a0aec0;
+    }
+    
+    .mailchimpsync-stats-value {
+        color: #e2e8f0;
+    }
+    
+    .mailchimpsync-config-section {
+        background: #2d3748;
+        border-color: #4a5568;
+    }
+    
+    .mailchimpsync-config-header {
+        background: #1a202c;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+}
