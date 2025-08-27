@@ -3,6 +3,8 @@ Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
 
 This file is part of a Moko Consulting project.
 
+SPDX-License-Identifier: GPL-3.0-or-later
+
 This documentation is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +18,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this documentation. If not, see <https://www.gnu.org/licenses/>.
 
-SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
 # Code of Conduct

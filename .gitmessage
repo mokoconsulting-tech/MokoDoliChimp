@@ -1,0 +1,9 @@
+# <type>(<scope>): <subject>
+# types: build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test
+# subject: imperative, lower-case, no trailing period
+
+# Body: what and why
+
+# BREAKING CHANGE: <description>
+# Closes: #123
+# Signed-off-by: <Your Name> <you@example.com>

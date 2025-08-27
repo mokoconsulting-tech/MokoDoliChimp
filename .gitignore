@@ -2,6 +2,9 @@
 # Logs and databases
 /logs/
 /tmp/
+/documents/
+/administrator/logs/
+/packages/*
 
 #Dev related
 build/
@@ -21,6 +24,7 @@ installation/
 *.bak
 *.backup
 /backups/
+/htdocs/solo/
 
 # Environment-specific files
 .env
@@ -47,9 +51,7 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 sftp-config*.json
-template.sftp-config.json
-sync.ffs_db
-*.ffs_gui
+*.ffs*
 
 # Editor and IDE files
 .vscode/
@@ -61,4 +63,5 @@ sync.ffs_db
 *.back
 *.old
 
-#Custom Config
+#Custom CSS Brands
+colors_custom_*.css

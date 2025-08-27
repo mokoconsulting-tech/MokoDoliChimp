@@ -1,2 +1,26 @@
-# Auto detect text files and perform LF normalization
+# Core text normalization
 * text=auto
+
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.php text eol=lf
+*.js  text eol=lf
+*.ts  text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md  text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+
+*.md   diff=markdown
+package-lock.json merge=union
+pnpm-lock.yaml    merge=union
+
+/.github export-ignore
+/.gitmessage export-ignore
+/.git-blame-ignore-revs export-ignore
