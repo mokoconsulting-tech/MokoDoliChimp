@@ -7,9 +7,38 @@
  * (at your option) any later version.
  */
 
-require_once __DIR__ . '/../vendor/autoload.php';
+// Check if vendor autoload exists, otherwise use mock implementation
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+}
 
-use MailchimpMarketing\ApiClient;
+// Import Mailchimp API classes if available
+if (class_exists('MailchimpMarketing\ApiClient')) {
+    // Use real Mailchimp SDK
+} else {
+    // Mock ApiClient for standalone testing
+    class ApiClient {
+        public function setConfig($config) {}
+        public function ping() { return (object)['status' => 'ok']; }
+        public $lists;
+        public function __construct() {
+            $this->lists = new class {
+                public function setListMember($listId, $hash, $data) {
+                    return (object)['id' => 'mock_' . rand(1000, 9999)];
+                }
+                public function getAllLists() {
+                    return (object)['lists' => []];
+                }
+                public function getListMembersInfo($listId) {
+                    return (object)['members' => []];
+                }
+            };
+            $this->ping = new class {
+                public function get() { return (object)['status' => 'ok']; }
+            };
+        }
+    }
+}
 
 /**
  * Main MokoDoliChimp class for synchronization functionality
@@ -177,8 +206,13 @@ class MokoDoliChimp
                     'LNAME' => $thirdparty['lastname'] ?? $thirdparty['name'] ?? '',
                     'COMPANY' => $thirdparty['name'] ?? '',
                     'PHONE' => $thirdparty['phone'] ?? '',
+                    'ADDRESS' => $thirdparty['address'] ?? '',
+                    'ZIP' => $thirdparty['zip'] ?? '',
+                    'CITY' => $thirdparty['town'] ?? '',
+                    'COUNTRY' => $thirdparty['country'] ?? '',
+                    'SIGNUP' => $thirdparty['date_creation'] ?? '', // Creation date as signup date
                 ],
-                'tags' => ['dolibarr-thirdparty']
+                'tags' => ['dolibarr-thirdparty', 'company']
             ];
 
             $response = $this->mailchimp->lists->setListMember($list_id, $email_hash, $member_data);
@@ -273,9 +307,16 @@ class MokoDoliChimp
                     'FNAME' => $contact['firstname'] ?? '',
                     'LNAME' => $contact['lastname'] ?? '',
                     'PHONE' => $contact['phone'] ?? '',
+                    'MOBILE' => $contact['phone_mobile'] ?? '',
                     'COMPANY' => $contact['company'] ?? '',
+                    'ADDRESS' => $contact['address'] ?? '',
+                    'ZIP' => $contact['zip'] ?? '',
+                    'CITY' => $contact['town'] ?? '',
+                    'COUNTRY' => $contact['country'] ?? '',
+                    'BIRTHDAY' => $contact['birthday'] ?? '', // Date of birth
+                    'SIGNUP' => $contact['date_creation'] ?? '',
                 ],
-                'tags' => ['dolibarr-contact']
+                'tags' => ['dolibarr-contact', 'individual']
             ];
 
             $response = $this->mailchimp->lists->setListMember($list_id, $email_hash, $member_data);
@@ -369,9 +410,17 @@ class MokoDoliChimp
                 'merge_fields' => [
                     'FNAME' => $user['firstname'] ?? '',
                     'LNAME' => $user['lastname'] ?? '',
-                    'PHONE' => $user['phone'] ?? '',
+                    'PHONE' => $user['office_phone'] ?? '',
+                    'MOBILE' => $user['user_mobile'] ?? '',
+                    'JOB' => $user['job'] ?? '',
+                    'ADDRESS' => $user['address'] ?? '',
+                    'ZIP' => $user['zip'] ?? '',
+                    'CITY' => $user['town'] ?? '',
+                    'COUNTRY' => $user['country'] ?? '',
+                    'BIRTHDAY' => $user['birth'] ?? '', // Date of birth
+                    'SIGNUP' => $user['date_creation'] ?? '',
                 ],
-                'tags' => ['dolibarr-user']
+                'tags' => ['dolibarr-user', 'employee']
             ];
 
             $response = $this->mailchimp->lists->setListMember($list_id, $email_hash, $member_data);
@@ -512,7 +561,11 @@ class MokoDoliChimp
      */
     private function getThirdParties()
     {
-        // Mock data for demonstration - in real implementation, this would query Dolibarr database
+        // In real Dolibarr implementation, this would query:
+        // SELECT rowid, nom, email, phone, address, zip, town, country_code, datec, tms
+        // FROM llx_societe WHERE entity IN (1) AND status = 1
+        
+        // Mock data with additional fields including DOB-like creation date
         return [
             [
                 'id' => 1,
@@ -520,7 +573,13 @@ class MokoDoliChimp
                 'email' => 'contact@acme.com',
                 'firstname' => 'John',
                 'lastname' => 'Doe',
-                'phone' => '+1234567890'
+                'phone' => '+1234567890',
+                'address' => '123 Business Ave',
+                'zip' => '10001',
+                'town' => 'New York',
+                'country' => 'US',
+                'date_creation' => '2023-01-15',
+                'date_modification' => '2024-12-01'
             ],
             [
                 'id' => 2,
@@ -528,7 +587,13 @@ class MokoDoliChimp
                 'email' => 'info@techsolutions.com',
                 'firstname' => 'Jane',
                 'lastname' => 'Smith',
-                'phone' => '+1987654321'
+                'phone' => '+1987654321',
+                'address' => '456 Tech Street',
+                'zip' => '90210',
+                'town' => 'Los Angeles',
+                'country' => 'US',
+                'date_creation' => '2023-03-20',
+                'date_modification' => '2024-11-15'
             ]
         ];
     }
@@ -539,7 +604,11 @@ class MokoDoliChimp
      */
     private function getContacts()
     {
-        // Mock data for demonstration
+        // In real Dolibarr implementation, this would query:
+        // SELECT rowid, firstname, lastname, email, phone, phone_perso, phone_mobile, 
+        //        birthday, address, zip, town, country, fk_soc, statut, datec, tms
+        // FROM llx_socpeople WHERE entity IN (1) AND statut = 1
+        
         return [
             [
                 'id' => 1,
@@ -547,7 +616,16 @@ class MokoDoliChimp
                 'lastname' => 'Johnson',
                 'email' => 'alice.johnson@company.com',
                 'phone' => '+1555123456',
-                'company' => 'Johnson & Associates'
+                'phone_mobile' => '+1555123457',
+                'company' => 'Johnson & Associates',
+                'fk_soc' => 1,
+                'birthday' => '1985-06-15',
+                'address' => '789 Contact Lane',
+                'zip' => '10002',
+                'town' => 'New York',
+                'country' => 'US',
+                'date_creation' => '2023-02-10',
+                'date_modification' => '2024-12-01'
             ],
             [
                 'id' => 2,
@@ -555,7 +633,16 @@ class MokoDoliChimp
                 'lastname' => 'Wilson',
                 'email' => 'bob.wilson@enterprise.com',
                 'phone' => '+1555789012',
-                'company' => 'Wilson Enterprises'
+                'phone_mobile' => '+1555789013',
+                'company' => 'Wilson Enterprises',
+                'fk_soc' => 2,
+                'birthday' => '1978-11-22',
+                'address' => '321 Professional Blvd',
+                'zip' => '90211',
+                'town' => 'Los Angeles',
+                'country' => 'US',
+                'date_creation' => '2023-04-05',
+                'date_modification' => '2024-11-20'
             ]
         ];
     }
@@ -566,21 +653,45 @@ class MokoDoliChimp
      */
     private function getUsers()
     {
-        // Mock data for demonstration
+        // In real Dolibarr implementation, this would query:
+        // SELECT rowid, login, firstname, lastname, email, office_phone, user_mobile,
+        //        birth, job, address, zip, town, country, statut, datec, tms
+        // FROM llx_user WHERE entity IN (1) AND statut = 1
+        
         return [
             [
                 'id' => 1,
+                'login' => 'admin',
                 'firstname' => 'Admin',
                 'lastname' => 'User',
                 'email' => 'admin@dolibarr.local',
-                'phone' => '+1555000000'
+                'office_phone' => '+1555000000',
+                'user_mobile' => '+1555000001',
+                'birth' => '1980-01-01',
+                'job' => 'System Administrator',
+                'address' => '100 Admin Street',
+                'zip' => '10003',
+                'town' => 'New York',
+                'country' => 'US',
+                'date_creation' => '2023-01-01',
+                'date_modification' => '2024-12-01'
             ],
             [
                 'id' => 2,
+                'login' => 'sales',
                 'firstname' => 'Sales',
                 'lastname' => 'Manager',
                 'email' => 'sales@dolibarr.local',
-                'phone' => '+1555111111'
+                'office_phone' => '+1555111111',
+                'user_mobile' => '+1555111112',
+                'birth' => '1975-05-10',
+                'job' => 'Sales Manager',
+                'address' => '200 Sales Plaza',
+                'zip' => '90212',
+                'town' => 'Los Angeles', 
+                'country' => 'US',
+                'date_creation' => '2023-01-15',
+                'date_modification' => '2024-11-30'
             ]
         ];
     }

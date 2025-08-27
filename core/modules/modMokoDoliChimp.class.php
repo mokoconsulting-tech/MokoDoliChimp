@@ -28,11 +28,42 @@
  * Description and activation class for module MokoDoliChimp
  */
 /**
- * Base class for Dolibarr modules
+ * Base class for Dolibarr modules - Mock implementation for standalone testing
  */
 class DolibarrModules
 {
     protected $db;
+    public $numero;
+    public $rights_class;
+    public $family;
+    public $module_position;
+    public $familyinfo;
+    public $name;
+    public $description;
+    public $descriptionlong;
+    public $version;
+    public $editor_name;
+    public $editor_url;
+    public $const_name;
+    public $picto;
+    public $module_parts;
+    public $dirs;
+    public $config_page_url;
+    public $hidden;
+    public $depends;
+    public $requiredby;
+    public $conflictwith;
+    public $langfiles;
+    public $phpmin;
+    public $need_dolibarr_version;
+    public $const;
+    public $tabs;
+    public $dictionaries;
+    public $boxes;
+    public $cronjobs;
+    public $rights;
+    public $menu;
+    
     protected function _load_tables($path) { return 1; }
     protected function _init($sql, $options) { return 1; }
     protected function _remove($sql, $options) { return 1; }
