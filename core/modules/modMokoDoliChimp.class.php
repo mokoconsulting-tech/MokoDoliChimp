@@ -184,6 +184,92 @@ class modMokoDoliChimp extends DolibarrModules
             ),
         );
 
+        // Menu entries for Dolibarr navigation
+        $this->menu = array();
+        
+        // Main menu entry
+        $r = 0;
+        $this->menu[$r] = array(
+            'fk_menu' => '',
+            'type' => 'top',
+            'titre' => 'MokoDoliChimp',
+            'prefix' => '<i class="fa fa-exchange-alt paddingright"></i>',
+            'mainmenu' => 'mokodolichimp',
+            'leftmenu' => '',
+            'url' => '/mokodolichimp/sync_dashboard.php',
+            'langs' => 'mokodolichimp@mokodolichimp',
+            'position' => 1000,
+            'enabled' => '$conf->mokodolichimp->enabled',
+            'perms' => '$user->rights->mokodolichimp->sync->read',
+            'target' => '',
+            'user' => 2,
+        );
+        $r++;
+
+        // Submenu entries
+        $this->menu[$r] = array(
+            'fk_menu' => 'fk_mainmenu=mokodolichimp',
+            'type' => 'left',
+            'titre' => 'Dashboard',
+            'mainmenu' => 'mokodolichimp',
+            'leftmenu' => 'mokodolichimp_dashboard',
+            'url' => '/mokodolichimp/sync_dashboard.php',
+            'langs' => 'mokodolichimp@mokodolichimp',
+            'position' => 1001,
+            'enabled' => '$conf->mokodolichimp->enabled',
+            'perms' => '$user->rights->mokodolichimp->sync->read',
+            'target' => '',
+            'user' => 2,
+        );
+        $r++;
+
+        $this->menu[$r] = array(
+            'fk_menu' => 'fk_mainmenu=mokodolichimp',
+            'type' => 'left',
+            'titre' => 'Field Mapping',
+            'mainmenu' => 'mokodolichimp',
+            'leftmenu' => 'mokodolichimp_mapping',
+            'url' => '/mokodolichimp/field_mapping.php',
+            'langs' => 'mokodolichimp@mokodolichimp',
+            'position' => 1002,
+            'enabled' => '$conf->mokodolichimp->enabled',
+            'perms' => '$user->rights->mokodolichimp->sync->read',
+            'target' => '',
+            'user' => 2,
+        );
+        $r++;
+
+        $this->menu[$r] = array(
+            'fk_menu' => 'fk_mainmenu=mokodolichimp',
+            'type' => 'left',
+            'titre' => 'Tags & Segments',
+            'mainmenu' => 'mokodolichimp',
+            'leftmenu' => 'mokodolichimp_tags',
+            'url' => '/mokodolichimp/tag_segment_config.php',
+            'langs' => 'mokodolichimp@mokodolichimp',
+            'position' => 1003,
+            'enabled' => '$conf->mokodolichimp->enabled',
+            'perms' => '$user->rights->mokodolichimp->sync->read',
+            'target' => '',
+            'user' => 2,
+        );
+        $r++;
+
+        $this->menu[$r] = array(
+            'fk_menu' => 'fk_mainmenu=mokodolichimp',
+            'type' => 'left',
+            'titre' => 'Configuration',
+            'mainmenu' => 'mokodolichimp',
+            'leftmenu' => 'mokodolichimp_config',
+            'url' => '/mokodolichimp/admin/setup.php',
+            'langs' => 'mokodolichimp@mokodolichimp',
+            'position' => 1004,
+            'enabled' => '$conf->mokodolichimp->enabled',
+            'perms' => '$user->rights->mokodolichimp->sync->write',
+            'target' => '',
+            'user' => 2,
+        );
+
         // Permissions provided by this module
         $this->rights = array();
         $r = 0;

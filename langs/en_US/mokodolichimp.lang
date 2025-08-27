@@ -1,0 +1,103 @@
+# Dolibarr language file - Source file is en_US - mokodolichimp
+CHARSET=UTF-8
+
+# Module labels
+Module104000Name = MokoDoliChimp
+Module104000Desc = Bidirectional synchronization between Dolibarr and Mailchimp
+
+# Admin setup
+MokoDoliChimpSetup = MokoDoliChimp Setup
+MokoDoliChimpSetupPage = MokoDoliChimp setup page
+MOKODOLICHIMP_MAILCHIMP_API_KEY = Mailchimp API Key
+MOKODOLICHIMP_DEFAULT_LIST_ID = Default List ID
+MOKODOLICHIMP_SYNC_ENABLED = Enable synchronization
+MOKODOLICHIMP_REALTIME_SYNC = Enable real-time sync
+MOKODOLICHIMP_SYNC_FREQUENCY = Sync frequency (hours)
+
+# Menu entries
+MokoDoliChimpArea = MokoDoliChimp
+Dashboard = Dashboard
+FieldMapping = Field Mapping
+TagsSegments = Tags & Segments
+Configuration = Configuration
+
+# Dashboard
+SyncDashboard = Sync Dashboard
+ManualSync = Manual Sync
+ScheduledSync = Scheduled Sync
+SyncThirdParties = Sync Third Parties
+SyncContacts = Sync Contacts
+SyncUsers = Sync Users
+SyncFromMailchimp = Import from Mailchimp
+FullSync = Full Synchronization
+BiDirectionalSync = Bidirectional Sync
+
+# Sync results
+SyncCompleted = Synchronization completed
+SyncFailed = Synchronization failed
+SyncInProgress = Synchronization in progress
+RecordsProcessed = Records processed
+RecordsSuccess = Successful
+RecordsErrors = Errors
+ExecutionTime = Execution time
+
+# Field mapping
+FieldMappingConfig = Field Mapping Configuration
+DolibarrField = Dolibarr Field
+MailchimpField = Mailchimp Field
+MappingRule = Mapping Rule
+DefaultValue = Default Value
+ConditionalMapping = Conditional Mapping
+
+# Tags and segments
+TagManagement = Tag Management
+SegmentManagement = Segment Management
+AvailableTags = Available Tags
+AvailableSegments = Available Segments
+CreateNewTag = Create New Tag
+CreateNewSegment = Create New Segment
+TagMappingRules = Tag Mapping Rules
+SegmentMappingRules = Segment Mapping Rules
+
+# Errors and messages
+ErrorNoAPIKey = No Mailchimp API key configured
+ErrorConnectionFailed = Connection to Mailchimp failed
+ErrorSyncFailed = Synchronization failed
+MessageConfigSaved = Configuration saved successfully
+MessageSyncStarted = Synchronization started
+MessageSyncCompleted = Synchronization completed successfully
+
+# Permissions
+Permission104001 = Read MokoDoliChimp sync data
+Permission104002 = Create/Update MokoDoliChimp sync data
+Permission104003 = Delete MokoDoliChimp sync data
+Permission104004 = Configure MokoDoliChimp settings
+
+# Status
+StatusEnabled = Enabled
+StatusDisabled = Disabled
+StatusActive = Active
+StatusInactive = Inactive
+StatusPending = Pending
+StatusCompleted = Completed
+StatusFailed = Failed
+
+# Entity types
+ThirdParty = Third Party
+Contact = Contact
+User = User
+Company = Company
+Individual = Individual
+
+# Sync types
+ManualSyncType = Manual
+ScheduledSyncType = Scheduled
+RealTimeSyncType = Real-time
+BidirectionalSyncType = Bidirectional
+
+# Date fields
+DateCreation = Creation Date
+DateModification = Modification Date
+DateBirth = Date of Birth
+LastSync = Last Synchronization
+NextSync = Next Synchronization

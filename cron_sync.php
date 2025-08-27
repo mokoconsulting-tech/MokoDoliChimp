@@ -138,8 +138,24 @@ function runStandaloneTest() {
     return $result;
 }
 
+// Standalone testing
 if (php_sapi_name() === 'cli' || !empty($_GET['test'])) {
-    runStandaloneTest();
+    echo "MokoDoliChimp Cron Test\n";
+    echo "======================\n\n";
+    
+    $parameters = [
+        'sync_type' => $_GET['sync_type'] ?? 'scheduled',
+        'entity_type' => $_GET['entity_type'] ?? 'all',
+        'list_id' => $_GET['list_id'] ?? null
+    ];
+    
+    $result = doSchedule($parameters);
+    
+    echo "\nExit code: $result\n";
+    
+    if (php_sapi_name() === 'cli') {
+        exit($result);
+    }
 }
 
 /**
@@ -207,11 +223,7 @@ if (!empty($_GET['manual_test'])) {
                         'list_id' => $_GET['list_id']
                     ];
                     
-                    function runTestSchedule($params) {
-                        return doSchedule($params);
-                    }
-                    
-                    $result = runTestSchedule($test_params);
+                    $result = doSchedule($test_params);
                     $output = ob_get_clean();
                     echo htmlspecialchars($output);
                     ?>

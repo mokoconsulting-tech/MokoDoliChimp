@@ -14,13 +14,48 @@
  */
 
 require_once 'class/mokodolichimp.class.php';
+require_once 'class/sync_manager.class.php';
 
-// Simulate Dolibarr environment for standalone testing
+// Mock logger class for standalone testing
+if (!class_exists('MokoDoliChimpLogger')) {
+    class MokoDoliChimpLogger {
+        private $db;
+        public function __construct($db) { $this->db = $db; }
+        public function info($message) { error_log("INFO: $message"); }
+        public function error($message) { error_log("ERROR: $message"); }
+    }
+}
+
+// Check if we're in Dolibarr environment
+if (defined('DOL_DOCUMENT_ROOT')) {
+    // Real Dolibarr environment
+    require_once DOL_DOCUMENT_ROOT.'/main.inc.php';
+    require_once DOL_DOCUMENT_ROOT.'/core/lib/admin.lib.php';
+    
+    // Check permissions
+    if (!$user->rights->mokodolichimp->sync->read) {
+        accessforbidden();
+    }
+} else {
+    // Standalone testing environment
+    $conf = new stdClass();
+    $conf->mokodolichimp = new stdClass();
+    $conf->mokodolichimp->enabled = true;
+    
+    $user = new stdClass();
+    $user->rights = new stdClass();
+    $user->rights->mokodolichimp = new stdClass();
+    $user->rights->mokodolichimp->sync = new stdClass();
+    $user->rights->mokodolichimp->sync->read = true;
+    $user->rights->mokodolichimp->sync->write = true;
+}
+
 $action = $_GET['action'] ?? $_POST['action'] ?? 'view';
 $list_id = $_GET['list_id'] ?? $_POST['list_id'] ?? '';
 
-// Initialize MokoDoliChimp
+// Initialize MokoDoliChimp and SyncManager
 $mokodolichimp = new MokoDoliChimp(null);
+$syncManager = new MokoDoliChimpSyncManager(null);
 
 $message = '';
 $error = 0;
@@ -29,21 +64,18 @@ $sync_results = [];
 // Handle actions
 switch ($action) {
     case 'sync_thirdparties':
-        $sync_results = $mokodolichimp->syncThirdPartiesToMailchimp($list_id);
-        $message = sprintf('Third parties sync completed: %d success, %d errors', 
-            $sync_results['success'] ?? 0, $sync_results['errors'] ?? 0);
+        $sync_results = $syncManager->manualSync('thirdparty', $list_id);
+        $message = sprintf('Third parties sync completed: %s', $sync_results['message'] ?? 'Unknown result');
         break;
         
     case 'sync_contacts':
-        $sync_results = $mokodolichimp->syncContactsToMailchimp($list_id);
-        $message = sprintf('Contacts sync completed: %d success, %d errors', 
-            $sync_results['success'] ?? 0, $sync_results['errors'] ?? 0);
+        $sync_results = $syncManager->manualSync('contact', $list_id);
+        $message = sprintf('Contacts sync completed: %s', $sync_results['message'] ?? 'Unknown result');
         break;
         
     case 'sync_users':
-        $sync_results = $mokodolichimp->syncUsersToMailchimp($list_id);
-        $message = sprintf('Users sync completed: %d success, %d errors', 
-            $sync_results['success'] ?? 0, $sync_results['errors'] ?? 0);
+        $sync_results = $syncManager->manualSync('user', $list_id);
+        $message = sprintf('Users sync completed: %s', $sync_results['message'] ?? 'Unknown result');
         break;
         
     case 'sync_from_mailchimp':
@@ -53,17 +85,18 @@ switch ($action) {
         break;
         
     case 'full_sync':
-        $all_results = $mokodolichimp->doScheduledSync();
-        $total_success = 0;
-        $total_errors = 0;
-        foreach ($all_results as $entity_results) {
-            if (is_array($entity_results)) {
-                $total_success += $entity_results['success'] ?? 0;
-                $total_errors += $entity_results['errors'] ?? 0;
-            }
-        }
-        $message = sprintf('Full sync completed: %d success, %d errors', $total_success, $total_errors);
-        $sync_results = $all_results;
+        $sync_results = $syncManager->manualSync('all', $list_id);
+        $message = sprintf('Full sync completed: %s', $sync_results['message'] ?? 'Unknown result');
+        break;
+        
+    case 'bidirectional_sync':
+        $sync_results = $syncManager->bidirectionalSync($list_id);
+        $message = sprintf('Bidirectional sync completed: %s', $sync_results['message'] ?? 'Unknown result');
+        break;
+        
+    case 'get_sync_status':
+        $sync_results = $syncManager->getSyncStatus();
+        $message = 'Sync status retrieved successfully';
         break;
 }
 

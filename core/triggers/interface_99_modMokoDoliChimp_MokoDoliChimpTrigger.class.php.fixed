@@ -15,8 +15,11 @@
  * This trigger automatically syncs entities to Mailchimp when they are modified in Dolibarr
  */
 
-// Mock Dolibarr trigger base class for standalone testing
-if (!class_exists('DolibarrTriggers')) {
+// Check if we're in Dolibarr environment
+if (defined('DOL_DOCUMENT_ROOT')) {
+    require_once DOL_DOCUMENT_ROOT.'/core/triggers/dolibarrtriggers.class.php';
+} else {
+    // Mock Dolibarr trigger base class for standalone testing
     class DolibarrTriggers {
         protected $db;
         protected $name;
@@ -24,7 +27,16 @@ if (!class_exists('DolibarrTriggers')) {
         protected $description;
         protected $version;
         protected $picto;
+        
+        public function __construct($db) {
+            $this->db = $db;
+        }
     }
+    
+    // Mock Dolibarr classes for standalone testing
+    class User { public $id; public $rights; }
+    class Translate { }
+    class Conf { public $mokodolichimp; }
 }
 
 /**
@@ -43,9 +55,10 @@ class InterfaceMokoDoliChimpTrigger extends DolibarrTriggers
      */
     public function __construct($db)
     {
-        $this->db = $db;
+        parent::__construct($db);
+        
         $this->name = preg_replace('/^Interface/i', '', get_class($this));
-        $this->family = "demo";
+        $this->family = "mokodolichimp";
         $this->description = "MokoDoliChimp triggers to automatically sync entities to Mailchimp";
         $this->version = '1.0.0';
         $this->picto = 'mokodolichimp@mokodolichimp';
@@ -99,7 +112,12 @@ class InterfaceMokoDoliChimpTrigger extends DolibarrTriggers
         
         try {
             // Load sync manager
-            require_once __DIR__ . '/../../class/sync_manager.class.php';
+            if (defined('DOL_DOCUMENT_ROOT')) {
+                dol_include_once('/mokodolichimp/class/sync_manager.class.php');
+            } else {
+                require_once __DIR__ . '/../../class/sync_manager.class.php';
+            }
+            
             $syncManager = new MokoDoliChimpSyncManager($this->db);
 
             // Perform real-time sync
@@ -116,7 +134,7 @@ class InterfaceMokoDoliChimpTrigger extends DolibarrTriggers
 
         } catch (Exception $e) {
             // Log error
-            error_log("MokoDoliChimp Trigger Error: " . $e->getMessage());
+            $this->logError("MokoDoliChimp Trigger Error: " . $e->getMessage());
             
             // Don't fail the main operation if sync fails
             return 0;
@@ -131,10 +149,12 @@ class InterfaceMokoDoliChimpTrigger extends DolibarrTriggers
     private function isRealTimeSyncEnabled($conf)
     {
         // In real implementation, check configuration
-        // return !empty($conf->global->MOKODOLICHIMP_REALTIME_SYNC);
+        if (defined('DOL_DOCUMENT_ROOT') && isset($conf->global->MOKODOLICHIMP_REALTIME_SYNC)) {
+            return !empty($conf->global->MOKODOLICHIMP_REALTIME_SYNC);
+        }
         
-        // For demo, check if auto sync is enabled
-        return true; // Mock return
+        // For demo, default to enabled
+        return true;
     }
 
     /**
@@ -153,10 +173,36 @@ class InterfaceMokoDoliChimpTrigger extends DolibarrTriggers
             $result['status'] ?? 'unknown'
         );
 
-        error_log($message);
+        $this->logInfo($message);
 
         // In real implementation, could also log to custom table for detailed monitoring
         // $this->logToCustomTable($action, $object, $result);
+    }
+
+    /**
+     * Log info message
+     * @param string $message Message to log
+     */
+    private function logInfo($message)
+    {
+        if (function_exists('dol_syslog')) {
+            dol_syslog($message, LOG_INFO);
+        } else {
+            error_log("INFO: " . $message);
+        }
+    }
+
+    /**
+     * Log error message
+     * @param string $message Error message to log
+     */
+    private function logError($message)
+    {
+        if (function_exists('dol_syslog')) {
+            dol_syslog($message, LOG_ERR);
+        } else {
+            error_log("ERROR: " . $message);
+        }
     }
 
     /**
