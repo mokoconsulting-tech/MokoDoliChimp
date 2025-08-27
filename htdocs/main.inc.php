@@ -26,11 +26,60 @@ $conf = new stdClass();
 $conf->entity = 1;
 $conf->global = new stdClass();
 $conf->global->MAIN_APPLICATION_TITLE = 'Dolibarr ERP/CRM';
+$conf->global->MAILCHIMPSYNC_API_KEY = '';
+$conf->global->MAILCHIMPSYNC_SERVER_PREFIX = '';
+$conf->global->MAILCHIMPSYNC_DEFAULT_LIST = '';
+$conf->global->MAILCHIMPSYNC_AUTO_SYNC = 0;
 $conf->liste_limit = 25;
 
-// Initialize minimal database object (dummy)
-$db = new stdClass();
-$db->connected = true;
+// Define Database class with essential methods
+class DoliDB {
+    public $connected = true;
+    public $type = 'mysql';
+    
+    public function query($sql) {
+        // Return dummy result for demo
+        return new stdClass();
+    }
+    
+    public function fetch_object($result) {
+        // Return dummy data for demo
+        $obj = new stdClass();
+        $obj->total_syncs = rand(50, 200);
+        $obj->successful_syncs = rand(40, 180);
+        $obj->failed_syncs = rand(0, 20);
+        $obj->last_success = date('Y-m-d H:i:s', time() - rand(0, 86400));
+        $obj->last_failure = date('Y-m-d H:i:s', time() - rand(0, 86400));
+        return $obj;
+    }
+    
+    public function num_rows($result) {
+        return rand(0, 10);
+    }
+    
+    public function fetch_array($result) {
+        return array();
+    }
+    
+    public function idate($timestamp) {
+        return date('Y-m-d H:i:s', $timestamp);
+    }
+    
+    public function jdate($timestamp) {
+        return is_numeric($timestamp) ? $timestamp : strtotime($timestamp);
+    }
+    
+    public function lastinsertid($table = '') {
+        return rand(1, 1000);
+    }
+    
+    public function lasterror() {
+        return 'Demo error message';
+    }
+}
+
+// Initialize database object
+$db = new DoliDB();
 
 // Initialize minimal user object
 $user = new stdClass();
