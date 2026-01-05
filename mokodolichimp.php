@@ -82,7 +82,7 @@ if (!$mailchimpClient->isConfigured()) {
 	
 	print '<tr class="oddeven">';
 	print '<td>'.$langs->trans("MailchimpAPIKey").'</td>';
-	print '<td>'.($conf->global->MOKODOLICHIMP_APIKEY ? '***************' : $langs->trans("NotConfigured")).'</td>';
+	print '<td>'.(getDolGlobalString('MOKODOLICHIMP_APIKEY') ? '***************' : $langs->trans("NotConfigured")).'</td>';
 	print '</tr>';
 	
 	print '<tr class="oddeven">';
