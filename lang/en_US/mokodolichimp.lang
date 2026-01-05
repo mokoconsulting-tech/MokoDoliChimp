@@ -1,0 +1,63 @@
+# Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
+#
+# This file is part of MokoDoliChimp.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Generic
+#
+
+Module500100Name = MokoDoliChimp
+Module500100Desc = Sync Dolibarr contacts and users with Mailchimp
+
+#
+# Admin page
+#
+MokoDoliChimpSetup = MokoDoliChimp Setup
+Settings = Settings
+MokoDoliChimpSetupPage = MokoDoliChimp setup page
+MailchimpAPIKey = Mailchimp API Key
+MailchimpAPIKeyHelp = Enter your Mailchimp API key. You can find this in your Mailchimp account under Account > Extras > API Keys
+MailchimpListID = Mailchimp Audience/List ID
+MailchimpListIDHelp = Enter the Audience/List ID where contacts will be synced. Find this in Audience > Settings > Audience name and defaults
+MailchimpServerPrefix = Mailchimp Server Prefix
+MailchimpServerPrefixHelp = The server prefix from your API key (e.g., us5, us19). Usually extracted automatically from the API key.
+AutoSyncOnSave = Auto-sync on Contact/User Save
+AutoSyncOnSaveHelp = Automatically sync contacts and users to Mailchimp when they are created or updated in Dolibarr
+SyncStatus = Default Subscription Status
+SyncStatusHelp = Status to assign to new subscribers: subscribed (immediate) or pending (requires email confirmation)
+Subscribed = Subscribed
+Pending = Pending (Double Opt-in)
+
+#
+# Sync
+#
+SyncToMailchimp = Sync to Mailchimp
+SyncContact = Sync Contact
+SyncUser = Sync User
+SyncSuccess = Successfully synced to Mailchimp
+SyncError = Error syncing to Mailchimp: %s
+MailchimpNotConfigured = Mailchimp is not configured. Please configure API key and List ID in the module settings.
+ContactSyncedToMailchimp = Contact synced to Mailchimp
+UserSyncedToMailchimp = User synced to Mailchimp
+
+#
+# Permissions
+#
+Permission500101 = Read MokoDoliChimp
+Permission500102 = Configure MokoDoliChimp
+Permission500103 = Sync contacts with Mailchimp
