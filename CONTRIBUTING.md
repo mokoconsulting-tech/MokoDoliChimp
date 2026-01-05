@@ -20,7 +20,7 @@
 -->
 
 <!-- FILE INFORMATION
- * INGROUP:   MokoCodingDefaults
+ * INGROUP:   MokoStandards
  * FILE:      CONTRIBUTING.md
  * VERSION  	1.0
  * BRIEF:     How to contribute; commit, PR, testing and security policies

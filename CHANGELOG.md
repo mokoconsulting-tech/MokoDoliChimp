@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-05
 ### Added
 - Initial release of MokoDoliChimp module
-- Dolibarr module structure following MokoCodingDefaults
+- Dolibarr module structure following MokoStandards
 - Mailchimp API integration for contact and user synchronization
 - Admin configuration page for API key and list settings
 - Manual sync button on contact and user cards
