@@ -26,15 +26,19 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2025-08-13
+## [1.0.0] - 2025-01-05
 ### Added
-- First stable release
-- Implemented all initial planned features
-- Added README.md and CHANGELOG.md
-- Applied GNU GPL v3 license
+- Initial release of MokoDoliChimp module
+- Dolibarr module structure following MokoStandards
+- Mailchimp API integration for contact and user synchronization
+- Admin configuration page for API key and list settings
+- Manual sync button on contact and user cards
+- Auto-sync functionality on contact/user create and update
+- Support for double opt-in (pending status)
+- Comprehensive documentation and installation guide
+- GPL-3.0-or-later licensing with proper headers
+- Permissions system (read, configure, sync)
+- Multi-language support (English included)
+- Error handling and user feedback messages
 
-## [Unreleased]
-- Initial setup and project scaffolding
-- Added core features
-- Created initial documentation
 
