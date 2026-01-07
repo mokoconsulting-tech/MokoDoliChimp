@@ -190,7 +190,6 @@ update: ## Update existing installation
 test: check ## Run tests (placeholder for future test implementation)
 	@echo "$(COLOR_BOLD)Running tests...$(COLOR_RESET)"
 	@echo "$(COLOR_YELLOW)Note: Test suite not yet implemented$(COLOR_RESET)"
-	@echo "$(COLOR_GREEN)✓ Tests completed$(COLOR_RESET)"
 
 .PHONY: dist
 dist: build ## Create distribution package (alias for build)
