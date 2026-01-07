@@ -3,12 +3,14 @@ Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
 
 This file is part of a Moko Consulting project.
 
-This documentation is free software: you can redistribute it and/or modify
+SPDX-License-Identifier: GPL-3.0-or-later
+
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-This documentation is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -16,7 +18,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this documentation. If not, see <https://www.gnu.org/licenses/>.
 
-SPDX-License-Identifier: GPL-3.0-or-later
+FILE INFORMATION
+DEFGROUP: MokoDoliChimp.Documentation
+INGROUP: MokoDoliChimp
+REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+FILE: CHANGELOG.md
+VERSION: 01.00.00
+BRIEF: Version history and release notes for MokoDoliChimp
+PATH: /CHANGELOG.md
 -->
 
 # Changelog
@@ -25,6 +34,15 @@ All notable changes to this project will be documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Changed
+- Restructured repository according to MokoStandards
+- Added MokoStandards as a git submodule
+- Updated all file headers with FILE INFORMATION blocks
+- Added `docs/` directory with index
+- Added `scripts/` directory for build/validation scripts
+- Updated folder structure documentation
 
 ## [1.0.0] - 2025-01-05
 ### Added
