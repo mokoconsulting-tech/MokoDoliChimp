@@ -22,7 +22,7 @@ FILE INFORMATION
 DEFGROUP: MokoDoliChimp.Scripts
 INGROUP: MokoDoliChimp
 REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
-FILE: scripts/index.md
+FILE: /scripts/index.md
 VERSION: 01.00.00
 BRIEF: Scripts directory index for build and validation scripts
 PATH: /scripts/index.md

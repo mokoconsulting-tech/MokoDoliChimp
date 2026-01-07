@@ -22,7 +22,7 @@ FILE INFORMATION
 DEFGROUP: MokoDoliChimp.Documentation
 INGROUP: MokoDoliChimp
 REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
-FILE: docs/index.md
+FILE: /docs/index.md
 VERSION: 01.00.00
 BRIEF: Documentation index for MokoDoliChimp module
 PATH: /docs/index.md
