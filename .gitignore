@@ -9,7 +9,6 @@
 #Dev related
 build/
 dev/
-scripts/
 
 #Configuration files
 /configuration.php
