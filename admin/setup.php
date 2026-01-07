@@ -1,8 +1,7 @@
 <?php
-/**
- * Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
+/* Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
  *
- * This file is part of MokoDoliChimp.
+ * This file is part of a Moko Consulting project.
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
@@ -18,12 +17,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
-
-/**
- * \file       admin/setup.php
- * \ingroup    mokodolichimp
- * \brief      MokoDoliChimp setup page
+ *
+ * FILE INFORMATION
+ * DEFGROUP: MokoDoliChimp.Admin
+ * INGROUP: MokoDoliChimp
+ * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+ * PATH: /admin/setup.php
+ * VERSION: 01.00.00
+ * BRIEF: Setup and configuration page for MokoDoliChimp module
  */
 
 $res = 0;

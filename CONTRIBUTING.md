@@ -20,12 +20,14 @@
 -->
 
 <!-- FILE INFORMATION
- * INGROUP:   MokoStandards
- * FILE:      CONTRIBUTING.md
- * VERSION  	1.0
- * BRIEF:     How to contribute; commit, PR, testing and security policies
- * PATH:      ./CONTRIBUTING.md
- * NOTE:      Short and practical; see README for overview
+ * DEFGROUP: MokoDoliChimp.Documentation
+ * INGROUP: MokoDoliChimp
+ * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+ * FILE: CONTRIBUTING.md
+ * VERSION: 01.00.00
+ * BRIEF: How to contribute; commit, PR, testing and security policies
+ * PATH: /CONTRIBUTING.md
+ * NOTE: Short and practical; see README for overview
 -->
 
 # Contributing

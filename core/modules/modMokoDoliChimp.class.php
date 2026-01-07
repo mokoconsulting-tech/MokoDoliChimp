@@ -1,8 +1,7 @@
 <?php
-/**
- * Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
+/* Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
  *
- * This file is part of MokoDoliChimp.
+ * This file is part of a Moko Consulting project.
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
@@ -18,14 +17,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
-
-/**
- * \defgroup   mokodolichimp     Module MokoDoliChimp
- * \brief      MokoDoliChimp module descriptor
- * \file       core/modules/modMokoDoliChimp.class.php
- * \ingroup    mokodolichimp
- * \brief      Description and activation file for module MokoDoliChimp
+ *
+ * FILE INFORMATION
+ * DEFGROUP: MokoDoliChimp.Core
+ * INGROUP: MokoDoliChimp
+ * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+ * PATH: /core/modules/modMokoDoliChimp.class.php
+ * VERSION: 01.00.00
+ * BRIEF: Module descriptor and activation file for MokoDoliChimp
  */
 
 include_once DOL_DOCUMENT_ROOT.'/core/modules/DolibarrModules.class.php';

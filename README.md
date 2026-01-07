@@ -3,12 +3,14 @@ Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
 
 This file is part of a Moko Consulting project.
 
-This documentation is free software: you can redistribute it and/or modify
+SPDX-License-Identifier: GPL-3.0-or-later
+
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-This documentation is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -16,7 +18,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this documentation. If not, see <https://www.gnu.org/licenses/>.
 
-SPDX-License-Identifier: GPL-3.0-or-later
+FILE INFORMATION
+DEFGROUP: MokoDoliChimp.Documentation
+INGROUP: MokoDoliChimp
+REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+FILE: README.md
+VERSION: 01.00.00
+BRIEF: Readme and usage documentation for the MokoDoliChimp Dolibarr module
+PATH: /README.md
 -->
 # MokoDoliChimp
 
@@ -90,13 +99,20 @@ mokodolichimp/
 ├── core/                       # Core module files
 │   └── modules/
 │       └── modMokoDoliChimp.class.php   # Module descriptor
+├── docs/                       # Documentation
+│   └── index.md               # Documentation index
 ├── lang/                       # Language files
 │   └── en_US/
 │       └── mokodolichimp.lang  # English translations
+├── scripts/                    # Build and validation scripts
+│   └── index.md               # Scripts directory index
+├── MokoStandards/             # MokoStandards submodule (coding standards)
 ├── mokodolichimp.php          # Module main page
 ├── LICENSE                     # GPL-3.0-or-later license
 └── README.md                   # This file
 ```
+
+This module follows the [MokoStandards](https://github.com/mokoconsulting-tech/MokoCodingDefaults) structure for Moko Consulting projects.
 
 ---
 
