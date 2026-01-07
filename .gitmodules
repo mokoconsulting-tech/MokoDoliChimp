@@ -1,0 +1,3 @@
+[submodule "MokoStandards"]
+	path = MokoStandards
+	url = https://github.com/mokoconsulting-tech/MokoCodingDefaults.git

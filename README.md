@@ -3,12 +3,14 @@ Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
 
 This file is part of a Moko Consulting project.
 
-This documentation is free software: you can redistribute it and/or modify
+SPDX-License-Identifier: GPL-3.0-or-later
+
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-This documentation is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -16,7 +18,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this documentation. If not, see <https://www.gnu.org/licenses/>.
 
-SPDX-License-Identifier: GPL-3.0-or-later
+FILE INFORMATION
+DEFGROUP: MokoDoliChimp.Documentation
+INGROUP: MokoDoliChimp
+REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+FILE: README.md
+VERSION: 01.00.00
+BRIEF: Readme and usage documentation for the MokoDoliChimp Dolibarr module
+PATH: /README.md
 -->
 # MokoDoliChimp
 
@@ -36,13 +45,36 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 
 ## 🚀 Installation
 
+### Method 1: Using Makefile (Recommended)
+
+1. Clone the repository with submodules:
+	```bash
+	git clone --recurse-submodules https://github.com/mokoconsulting-tech/MokoDoliChimp.git
+	cd MokoDoliChimp
+	```
+
+2. Install to Dolibarr:
+	```bash
+	# Default installation (requires sudo if DOLIBARR_PATH needs permissions)
+	sudo make install
+	
+	# Or specify custom Dolibarr path
+	sudo make install DOLIBARR_PATH=/path/to/dolibarr
+	```
+
+3. In Dolibarr, go to **Home → Setup → Modules/Applications**
+
+4. Find **MokoDoliChimp** and click **Activate**
+
+### Method 2: Manual Installation
+
 1. Navigate to your Dolibarr custom modules directory:
 	```bash
 	cd /path/to/dolibarr/htdocs/custom
 	```
-2. Clone the repository:
+2. Clone the repository with submodules:
 	```bash
-	git clone https://github.com/mokoconsulting-tech/MokoDoliChimp.git mokodolichimp
+	git clone --recurse-submodules https://github.com/mokoconsulting-tech/MokoDoliChimp.git mokodolichimp
 	```
 3. Ensure proper permissions:
 	```bash
@@ -51,6 +83,91 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 	```
 4. In Dolibarr, go to **Home → Setup → Modules/Applications**
 5. Find **MokoDoliChimp** and click **Activate**
+
+### Method 3: Distribution Package
+
+1. Download the latest release ZIP from the [releases page](https://github.com/mokoconsulting-tech/MokoDoliChimp/releases)
+2. In Dolibarr, go to **Home → Setup → Modules/Applications**
+3. Click **Add external module** and upload the ZIP file
+4. Find **MokoDoliChimp** and click **Activate**
+
+---
+
+## 🔧 Development
+
+### 📖 Complete Development Guide
+
+For detailed step-by-step instructions on FTP-based development, local development, testing, and troubleshooting, see the **[Development Guide](docs/DEVELOPMENT_GUIDE.md)**.
+
+The guide includes:
+- Prerequisites and initial setup
+- FTP-based workflow with detailed commands
+- Local development workflow
+- Common development tasks
+- Testing procedures
+- Troubleshooting solutions
+- Quick reference commands
+
+### Development Workflow Options
+
+The project includes a comprehensive Makefile for build automation and deployment with two development workflows:
+
+#### Option 1: FTP-Based Development (Recommended for Remote Servers)
+
+For environments where you edit files directly via FTP in the custom directory:
+
+```bash
+# Initial setup - install module to Dolibarr
+sudo make install DOLIBARR_PATH=/path/to/dolibarr
+
+# Development cycle:
+# 1. Edit files locally in your project directory
+# 2. Sync changes to Dolibarr installation
+make dev-sync DOLIBARR_PATH=/path/to/dolibarr
+
+# Or set the path once as environment variable
+export DOLIBARR_PATH=/path/to/dolibarr
+make dev-sync
+```
+
+This workflow:
+- Syncs only module files (excludes .git, build artifacts, etc.)
+- Uses rsync with `--delete` to mirror your local changes
+- Perfect for FTP-based development environments
+- Allows testing changes immediately in Dolibarr
+
+#### Option 2: Symlink Development (For Local Development)
+
+For local development with direct file system access:
+
+```bash
+# Create development symlink (changes reflect immediately)
+sudo make dev-install DOLIBARR_PATH=/path/to/dolibarr
+```
+
+### Other Development Commands
+
+```bash
+# Show all available commands
+make help
+
+# Check PHP syntax
+make check
+
+# Validate module structure
+make validate
+
+# Build distribution package
+make build
+
+# Update existing installation
+sudo make update
+
+# Remove module installation
+sudo make uninstall
+```
+
+For more details on Makefile commands, run `make help`.
 
 ---
 
@@ -90,13 +207,20 @@ mokodolichimp/
 ├── core/                       # Core module files
 │   └── modules/
 │       └── modMokoDoliChimp.class.php   # Module descriptor
+├── docs/                       # Documentation
+│   └── index.md               # Documentation index
 ├── lang/                       # Language files
 │   └── en_US/
 │       └── mokodolichimp.lang  # English translations
+├── scripts/                    # Build and validation scripts
+│   └── index.md               # Scripts directory index
+├── MokoStandards/             # MokoStandards submodule (coding standards)
 ├── mokodolichimp.php          # Module main page
 ├── LICENSE                     # GPL-3.0-or-later license
 └── README.md                   # This file
 ```
+
+This module follows the [MokoStandards](https://github.com/mokoconsulting-tech/MokoCodingDefaults) structure for Moko Consulting projects.
 
 ---
 
