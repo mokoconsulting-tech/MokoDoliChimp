@@ -47,9 +47,9 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 
 ### Method 1: Using Makefile (Recommended)
 
-1. Clone the repository:
+1. Clone the repository with submodules:
 	```bash
-	git clone https://github.com/mokoconsulting-tech/MokoDoliChimp.git
+	git clone --recurse-submodules https://github.com/mokoconsulting-tech/MokoDoliChimp.git
 	cd MokoDoliChimp
 	```
 
@@ -72,9 +72,9 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 	```bash
 	cd /path/to/dolibarr/htdocs/custom
 	```
-2. Clone the repository:
+2. Clone the repository with submodules:
 	```bash
-	git clone https://github.com/mokoconsulting-tech/MokoDoliChimp.git mokodolichimp
+	git clone --recurse-submodules https://github.com/mokoconsulting-tech/MokoDoliChimp.git mokodolichimp
 	```
 3. Ensure proper permissions:
 	```bash

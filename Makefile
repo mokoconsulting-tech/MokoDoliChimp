@@ -47,6 +47,10 @@ DIST_FILES = admin class core lang docs scripts \
 	mokodolichimp.php \
 	LICENSE README.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md
 
+# Exclusion patterns for installation
+EXCLUDE_PATTERNS = --exclude='.git*' --exclude='MokoStandards' --exclude='$(BUILD_DIR)' \
+	--exclude='$(DIST_DIR)' --exclude='Makefile' --exclude='*.md'
+
 # Colors for output
 COLOR_RESET = \033[0m
 COLOR_BOLD = \033[1m
@@ -70,8 +74,19 @@ help: ## Show this help message
 .PHONY: check
 check: ## Check PHP syntax for all PHP files
 	@echo "$(COLOR_BOLD)Checking PHP syntax...$(COLOR_RESET)"
-	@find . -name "*.php" ! -path "./MokoStandards/*" ! -path "./.git/*" ! -path "./$(BUILD_DIR)/*" -exec php -l {} \; > /dev/null
-	@echo "$(COLOR_GREEN)✓ PHP syntax check completed$(COLOR_RESET)"
+	@errors=0; \
+	for file in $$(find . -name "*.php" ! -path "./MokoStandards/*" ! -path "./.git/*" ! -path "./$(BUILD_DIR)/*"); do \
+		if ! php -l "$$file" > /dev/null 2>&1; then \
+			php -l "$$file"; \
+			errors=$$((errors + 1)); \
+		fi; \
+	done; \
+	if [ $$errors -eq 0 ]; then \
+		echo "$(COLOR_GREEN)✓ PHP syntax check completed$(COLOR_RESET)"; \
+	else \
+		echo "$(COLOR_YELLOW)✗ Found $$errors syntax error(s)$(COLOR_RESET)"; \
+		exit 1; \
+	fi
 
 .PHONY: validate
 validate: check ## Validate module structure and requirements
@@ -116,13 +131,16 @@ install: validate ## Install module to Dolibarr (requires permissions)
 	fi
 	@mkdir -p $(CUSTOM_PATH)
 	@echo "Copying module files..."
-	@rsync -av --exclude='.git*' --exclude='MokoStandards' --exclude='$(BUILD_DIR)' \
-		--exclude='$(DIST_DIR)' --exclude='Makefile' \
+	@rsync -av $(EXCLUDE_PATTERNS) \
 		./ $(MODULE_PATH)/
 	@echo "Setting permissions..."
 	@chmod -R 755 $(MODULE_PATH)
 	@if command -v chown >/dev/null 2>&1 && [ -n "$(WEB_USER)" ]; then \
-		chown -R $(WEB_USER):$(WEB_GROUP) $(MODULE_PATH) || true; \
+		if chown -R $(WEB_USER):$(WEB_GROUP) $(MODULE_PATH) 2>/dev/null; then \
+			echo "$(COLOR_GREEN)✓ Ownership set to $(WEB_USER):$(WEB_GROUP)$(COLOR_RESET)"; \
+		else \
+			echo "$(COLOR_YELLOW)⚠ Could not set ownership (may require sudo)$(COLOR_RESET)"; \
+		fi; \
 	fi
 	@echo "$(COLOR_GREEN)✓ Module installed to $(MODULE_PATH)$(COLOR_RESET)"
 	@echo "$(COLOR_YELLOW)Next steps:$(COLOR_RESET)"
