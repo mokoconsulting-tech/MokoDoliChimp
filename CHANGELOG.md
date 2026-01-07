@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `make build` - Create distribution package
   - `make check` - Validate PHP syntax
   - `make dev-install` - Create development symlink
+  - `make dev-sync` - Sync changes for FTP-based development workflows
   - `make help` - Show all available commands
 
 ### Changed
@@ -51,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `docs/` directory with index
 - Added `scripts/` directory for build/validation scripts
 - Updated folder structure documentation
-- Enhanced README with multiple installation methods
+- Enhanced README with multiple installation methods and development workflows
 
 ## [1.0.0] - 2025-01-05
 ### Added

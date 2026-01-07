@@ -176,6 +176,28 @@ dev-install: ## Create symlink for development (requires permissions)
 	@echo "$(COLOR_GREEN)✓ Development symlink created$(COLOR_RESET)"
 	@echo "$(COLOR_YELLOW)Note: Changes in this directory will be immediately reflected in Dolibarr$(COLOR_RESET)"
 
+.PHONY: dev-sync
+dev-sync: ## Sync local changes to remote Dolibarr installation (for FTP workflows)
+	@echo "$(COLOR_BOLD)Syncing changes to $(MODULE_PATH)...$(COLOR_RESET)"
+	@if [ ! -d "$(MODULE_PATH)" ]; then \
+		echo "$(COLOR_YELLOW)Module not installed at $(MODULE_PATH)$(COLOR_RESET)"; \
+		echo "Creating directory and performing initial sync..."; \
+		mkdir -p $(MODULE_PATH); \
+	fi
+	@echo "Syncing files (excluding development artifacts)..."
+	@rsync -av --delete $(EXCLUDE_PATTERNS) \
+		--exclude='Makefile' --exclude='.editorconfig' --exclude='.git*' \
+		./ $(MODULE_PATH)/
+	@echo "$(COLOR_GREEN)✓ Files synced successfully$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)Synced from:$(COLOR_RESET) $(PWD)"
+	@echo "$(COLOR_BLUE)Synced to:$(COLOR_RESET)   $(MODULE_PATH)"
+	@echo ""
+	@echo "$(COLOR_YELLOW)Note: For FTP-based development:$(COLOR_RESET)"
+	@echo "  1. Edit files locally in this directory"
+	@echo "  2. Run 'make dev-sync' to sync changes to Dolibarr"
+	@echo "  3. Test changes in Dolibarr"
+	@echo "  4. Repeat as needed"
+
 .PHONY: update
 update: ## Update existing installation
 	@echo "$(COLOR_BOLD)Updating module installation...$(COLOR_RESET)"

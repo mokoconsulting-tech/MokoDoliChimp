@@ -95,9 +95,44 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 
 ## 🔧 Development
 
-### Using Makefile for Development
+### Development Workflow Options
 
-The project includes a comprehensive Makefile for build automation and deployment:
+The project includes a comprehensive Makefile for build automation and deployment with two development workflows:
+
+#### Option 1: FTP-Based Development (Recommended for Remote Servers)
+
+For environments where you edit files directly via FTP in the custom directory:
+
+```bash
+# Initial setup - install module to Dolibarr
+sudo make install DOLIBARR_PATH=/path/to/dolibarr
+
+# Development cycle:
+# 1. Edit files locally in your project directory
+# 2. Sync changes to Dolibarr installation
+make dev-sync DOLIBARR_PATH=/path/to/dolibarr
+
+# Or set the path once as environment variable
+export DOLIBARR_PATH=/path/to/dolibarr
+make dev-sync
+```
+
+This workflow:
+- Syncs only module files (excludes .git, build artifacts, etc.)
+- Uses rsync with `--delete` to mirror your local changes
+- Perfect for FTP-based development environments
+- Allows testing changes immediately in Dolibarr
+
+#### Option 2: Symlink Development (For Local Development)
+
+For local development with direct file system access:
+
+```bash
+# Create development symlink (changes reflect immediately)
+sudo make dev-install DOLIBARR_PATH=/path/to/dolibarr
+```
+
+### Other Development Commands
 
 ```bash
 # Show all available commands
@@ -111,9 +146,6 @@ make validate
 
 # Build distribution package
 make build
-
-# Create development symlink (for active development)
-sudo make dev-install DOLIBARR_PATH=/path/to/dolibarr
 
 # Update existing installation
 sudo make update
