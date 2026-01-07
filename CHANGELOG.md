@@ -36,6 +36,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Makefile for automated build and deployment
+  - `make install` - Install module to Dolibarr
+  - `make build` - Create distribution package
+  - `make check` - Validate PHP syntax
+  - `make dev-install` - Create development symlink
+  - `make help` - Show all available commands
+
 ### Changed
 - Restructured repository according to MokoStandards
 - Added MokoStandards as a git submodule
@@ -43,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `docs/` directory with index
 - Added `scripts/` directory for build/validation scripts
 - Updated folder structure documentation
+- Enhanced README with multiple installation methods
 
 ## [1.0.0] - 2025-01-05
 ### Added

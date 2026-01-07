@@ -45,6 +45,29 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 
 ## 🚀 Installation
 
+### Method 1: Using Makefile (Recommended)
+
+1. Clone the repository:
+	```bash
+	git clone https://github.com/mokoconsulting-tech/MokoDoliChimp.git
+	cd MokoDoliChimp
+	```
+
+2. Install to Dolibarr:
+	```bash
+	# Default installation (requires sudo if DOLIBARR_PATH needs permissions)
+	sudo make install
+	
+	# Or specify custom Dolibarr path
+	sudo make install DOLIBARR_PATH=/path/to/dolibarr
+	```
+
+3. In Dolibarr, go to **Home → Setup → Modules/Applications**
+
+4. Find **MokoDoliChimp** and click **Activate**
+
+### Method 2: Manual Installation
+
 1. Navigate to your Dolibarr custom modules directory:
 	```bash
 	cd /path/to/dolibarr/htdocs/custom
@@ -60,6 +83,46 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 	```
 4. In Dolibarr, go to **Home → Setup → Modules/Applications**
 5. Find **MokoDoliChimp** and click **Activate**
+
+### Method 3: Distribution Package
+
+1. Download the latest release ZIP from the [releases page](https://github.com/mokoconsulting-tech/MokoDoliChimp/releases)
+2. In Dolibarr, go to **Home → Setup → Modules/Applications**
+3. Click **Add external module** and upload the ZIP file
+4. Find **MokoDoliChimp** and click **Activate**
+
+---
+
+## 🔧 Development
+
+### Using Makefile for Development
+
+The project includes a comprehensive Makefile for build automation and deployment:
+
+```bash
+# Show all available commands
+make help
+
+# Check PHP syntax
+make check
+
+# Validate module structure
+make validate
+
+# Build distribution package
+make build
+
+# Create development symlink (for active development)
+sudo make dev-install DOLIBARR_PATH=/path/to/dolibarr
+
+# Update existing installation
+sudo make update
+
+# Remove module installation
+sudo make uninstall
+```
+
+For more details on Makefile commands, run `make help`.
 
 ---
 
