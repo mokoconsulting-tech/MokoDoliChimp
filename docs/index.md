@@ -32,11 +32,41 @@ PATH: /docs/index.md
 
 This directory contains documentation for the MokoDoliChimp module.
 
-## Main Documentation
+## Documentation Files
+
+### Developer Guides
+
+- **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)** - Comprehensive development guide with step-by-step instructions
+  - FTP-based development workflow
+  - Local development workflow
+  - Common development tasks
+  - Testing and troubleshooting
+  - Quick reference commands
+
+### Main Documentation
 
 - [README.md](../README.md) - Main project documentation and usage guide
 - [CHANGELOG.md](../CHANGELOG.md) - Version history and release notes
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Contribution guidelines
+
+## Getting Started with Development
+
+For detailed step-by-step instructions on setting up your development environment and syncing changes to your server via FTP, see the **[DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)**.
+
+Quick start:
+```bash
+# Clone with submodules
+git clone --recurse-submodules https://github.com/mokoconsulting-tech/MokoDoliChimp.git
+
+# Set your Dolibarr path
+export DOLIBARR_PATH=/var/www/html/dolibarr
+
+# Initial installation
+make install
+
+# Edit files locally, then sync to server
+make dev-sync
+```
 
 ## Module Structure
 

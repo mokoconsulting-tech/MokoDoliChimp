@@ -95,6 +95,19 @@ A Dolibarr module that seamlessly syncs contacts and users with Mailchimp subscr
 
 ## 🔧 Development
 
+### 📖 Complete Development Guide
+
+For detailed step-by-step instructions on FTP-based development, local development, testing, and troubleshooting, see the **[Development Guide](docs/DEVELOPMENT_GUIDE.md)**.
+
+The guide includes:
+- Prerequisites and initial setup
+- FTP-based workflow with detailed commands
+- Local development workflow
+- Common development tasks
+- Testing procedures
+- Troubleshooting solutions
+- Quick reference commands
+
 ### Development Workflow Options
 
 The project includes a comprehensive Makefile for build automation and deployment with two development workflows:

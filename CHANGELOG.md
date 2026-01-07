@@ -44,6 +44,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `make dev-install` - Create development symlink
   - `make dev-sync` - Sync changes for FTP-based development workflows
   - `make help` - Show all available commands
+- Comprehensive Development Guide (`docs/DEVELOPMENT_GUIDE.md`)
+  - Step-by-step FTP-based development workflow
+  - Local development workflow instructions
+  - Common development tasks and commands
+  - Testing procedures and troubleshooting
+  - Quick reference for all commands
 
 ### Changed
 - Restructured repository according to MokoStandards
@@ -53,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `scripts/` directory for build/validation scripts
 - Updated folder structure documentation
 - Enhanced README with multiple installation methods and development workflows
+- Updated docs/index.md with link to development guide
 
 ## [1.0.0] - 2025-01-05
 ### Added
