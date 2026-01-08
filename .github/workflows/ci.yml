@@ -96,7 +96,19 @@ jobs:
       - name: PHP syntax validation
         run: |
           echo "Checking PHP syntax..."
-          find src/ -name "*.php" -exec php -l {} \; | grep -v "No syntax errors"
+          errors=0
+          for file in $(find src/ -name "*.php"); do
+            if ! php -l "$file" > /dev/null 2>&1; then
+              php -l "$file"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ $errors -eq 0 ]; then
+            echo "✓ All PHP files have valid syntax"
+          else
+            echo "✗ Found $errors PHP syntax error(s)"
+            exit 1
+          fi
 
       - name: Check Dolibarr API usage
         run: |
