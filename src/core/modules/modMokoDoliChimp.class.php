@@ -22,7 +22,7 @@
  * DEFGROUP: MokoDoliChimp.Core
  * INGROUP: MokoDoliChimp
  * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
- * PATH: /core/modules/modMokoDoliChimp.class.php
+ * PATH: /src/core/modules/modMokoDoliChimp.class.php
  * VERSION: 01.00.00
  * BRIEF: Module descriptor and activation file for MokoDoliChimp
  */

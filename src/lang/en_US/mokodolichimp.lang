@@ -21,7 +21,7 @@
 # DEFGROUP: MokoDoliChimp.Translations
 # INGROUP: MokoDoliChimp
 # REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
-# PATH: /lang/en_US/mokodolichimp.lang
+# PATH: /src/lang/en_US/mokodolichimp.lang
 # VERSION: 01.00.00
 # BRIEF: English (US) language translations for MokoDoliChimp module
 

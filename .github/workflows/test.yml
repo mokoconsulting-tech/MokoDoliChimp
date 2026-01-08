@@ -1,0 +1,209 @@
+# Copyright (C) 2026 Moko Consulting <hello@mokoconsulting.tech>
+#
+# This file is part of a Moko Consulting project.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# FILE INFORMATION
+# DEFGROUP: GitHub.Workflow
+# INGROUP: MokoStandards.Testing
+# REPO: https://github.com/mokoconsulting-tech/MokoStandards
+# PATH: /templates/workflows/dolibarr/test.yml
+# VERSION: 01.00.00
+# BRIEF: Automated testing workflow for Dolibarr modules
+# NOTE: Supports unit tests and integration tests with Dolibarr environment
+
+name: Test Suite
+
+on:
+  push:
+    branches:
+      - main
+      - dev/**
+      - rc/**
+  pull_request:
+    branches:
+      - main
+      - dev/**
+      - rc/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phpunit:
+    name: PHPUnit Tests (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: dolibarr_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2']
+        dolibarr-version: ['17.0', '18.0']
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, mysqli, gd, curl, zip, intl
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Download Dolibarr ${{ matrix.dolibarr-version }}
+        run: |
+          wget https://github.com/Dolibarr/dolibarr/archive/refs/tags/${{ matrix.dolibarr-version }}.0.tar.gz
+          tar -xzf ${{ matrix.dolibarr-version }}.0.tar.gz
+          mv dolibarr-${{ matrix.dolibarr-version }}.0 dolibarr
+
+      - name: Configure Dolibarr
+        run: |
+          cd dolibarr
+          cp htdocs/conf/conf.php.example htdocs/conf/conf.php
+          
+          # Configure database connection
+          sed -i "s/\$dolibarr_main_db_host = .*/\$dolibarr_main_db_host = '127.0.0.1';/" htdocs/conf/conf.php
+          sed -i "s/\$dolibarr_main_db_name = .*/\$dolibarr_main_db_name = 'dolibarr_test';/" htdocs/conf/conf.php
+          sed -i "s/\$dolibarr_main_db_user = .*/\$dolibarr_main_db_user = 'root';/" htdocs/conf/conf.php
+          sed -i "s/\$dolibarr_main_db_pass = .*/\$dolibarr_main_db_pass = 'root';/" htdocs/conf/conf.php
+
+      - name: Link module to Dolibarr
+        run: |
+          MODULE_NAME=$(basename $(pwd))
+          mkdir -p dolibarr/htdocs/custom/
+          ln -s $(pwd) dolibarr/htdocs/custom/$MODULE_NAME
+
+      - name: Install dependencies
+        run: |
+          if [ -f "composer.json" ]; then
+            composer install --prefer-dist --no-progress
+          fi
+
+      - name: Run PHPUnit tests
+        run: |
+          if [ -f "vendor/bin/phpunit" ]; then
+            vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+          elif [ -f "phpunit.xml" ] || [ -f "phpunit.xml.dist" ]; then
+            php vendor/phpunit/phpunit/phpunit --coverage-text
+          else
+            echo "No PHPUnit configuration found, skipping tests"
+          fi
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        if: matrix.php-version == '8.1' && matrix.dolibarr-version == '18.0'
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-dolibarr
+
+  integration:
+    name: Integration Tests (Dolibarr ${{ matrix.dolibarr-version }})
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: dolibarr_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+    
+    strategy:
+      matrix:
+        dolibarr-version: ['17.0', '18.0']
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, mysqli, gd, curl, zip, intl
+          tools: composer:v2
+
+      - name: Setup Dolibarr ${{ matrix.dolibarr-version }}
+        run: |
+          # Download and configure Dolibarr
+          wget https://github.com/Dolibarr/dolibarr/archive/refs/tags/${{ matrix.dolibarr-version }}.0.tar.gz
+          tar -xzf ${{ matrix.dolibarr-version }}.0.tar.gz
+          mv dolibarr-${{ matrix.dolibarr-version }}.0 dolibarr
+          
+          # Configure database
+          cd dolibarr
+          cp htdocs/conf/conf.php.example htdocs/conf/conf.php
+          sed -i "s/\$dolibarr_main_db_host = .*/\$dolibarr_main_db_host = '127.0.0.1';/" htdocs/conf/conf.php
+          sed -i "s/\$dolibarr_main_db_name = .*/\$dolibarr_main_db_name = 'dolibarr_test';/" htdocs/conf/conf.php
+          sed -i "s/\$dolibarr_main_db_user = .*/\$dolibarr_main_db_user = 'root';/" htdocs/conf/conf.php
+          sed -i "s/\$dolibarr_main_db_pass = .*/\$dolibarr_main_db_pass = 'root';/" htdocs/conf/conf.php
+
+      - name: Install module
+        run: |
+          MODULE_NAME=$(basename $(pwd))
+          mkdir -p dolibarr/htdocs/custom/$MODULE_NAME
+          # Copy source files from src/ directory to dolibarr custom directory
+          cp -r src/* dolibarr/htdocs/custom/$MODULE_NAME/
+
+      - name: Run integration tests
+        run: |
+          if [ -d "tests/Integration" ]; then
+            vendor/bin/phpunit --testsuite Integration
+          else
+            echo "No integration tests found"
+          fi
+
+  summary:
+    name: Test Summary
+    runs-on: ubuntu-latest
+    needs: [phpunit, integration]
+    if: always()
+    
+    steps:
+      - name: Check test results
+        run: |
+          echo "### Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository: $GITHUB_REPOSITORY" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: $GITHUB_REF_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: $GITHUB_SHA" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All test suites completed." >> $GITHUB_STEP_SUMMARY

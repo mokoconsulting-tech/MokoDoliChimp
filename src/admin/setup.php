@@ -22,7 +22,7 @@
  * DEFGROUP: MokoDoliChimp.Admin
  * INGROUP: MokoDoliChimp
  * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
- * PATH: /admin/setup.php
+ * PATH: /src/admin/setup.php
  * VERSION: 01.00.00
  * BRIEF: Setup and configuration page for MokoDoliChimp module
  */

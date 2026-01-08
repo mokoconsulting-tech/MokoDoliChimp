@@ -72,12 +72,13 @@ make dev-sync
 
 The MokoDoliChimp module follows the MokoStandards structure:
 
-- `/admin/` - Administration and configuration pages
-- `/class/` - Business logic classes
-- `/core/` - Core module files and descriptors
-- `/lang/` - Translation files
+- `/src/` - Source code
+  - `/src/admin/` - Administration and configuration pages
+  - `/src/class/` - Business logic classes
+  - `/src/core/` - Core module files and descriptors
+  - `/src/lang/` - Translation files
 - `/docs/` - Documentation (this directory)
 - `/scripts/` - Build and validation scripts
 - `/MokoStandards/` - MokoStandards submodule reference
 
-For more information about MokoStandards, see the [MokoStandards repository](https://github.com/mokoconsulting-tech/MokoCodingDefaults).
+For more information about MokoStandards, see the [MokoStandards repository](https://github.com/mokoconsulting-tech/MokoStandards).
