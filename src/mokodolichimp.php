@@ -22,7 +22,7 @@
  * DEFGROUP: MokoDoliChimp.Pages
  * INGROUP: MokoDoliChimp
  * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
- * PATH: /mokodolichimp.php
+ * PATH: /src/mokodolichimp.php
  * VERSION: 01.00.00
  * BRIEF: Main page for MokoDoliChimp module displaying configuration status
  */

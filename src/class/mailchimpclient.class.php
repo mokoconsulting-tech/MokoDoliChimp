@@ -22,7 +22,7 @@
  * DEFGROUP: MokoDoliChimp.Classes
  * INGROUP: MokoDoliChimp
  * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
- * PATH: /class/mailchimpclient.class.php
+ * PATH: /src/class/mailchimpclient.class.php
  * VERSION: 01.00.00
  * BRIEF: Mailchimp API client for syncing contacts and users to Mailchimp lists
  */

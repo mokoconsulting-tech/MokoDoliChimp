@@ -22,7 +22,7 @@
  * DEFGROUP: MokoDoliChimp.Classes
  * INGROUP: MokoDoliChimp
  * REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
- * PATH: /class/actions_mokodolichimp.class.php
+ * PATH: /src/class/actions_mokodolichimp.class.php
  * VERSION: 01.00.00
  * BRIEF: Hook implementations for automatic and manual Mailchimp sync actions
  */
