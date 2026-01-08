@@ -220,7 +220,7 @@ mokodolichimp/
 └── README.md                   # This file
 ```
 
-This module follows the [MokoStandards](https://github.com/mokoconsulting-tech/MokoCodingDefaults) structure for Moko Consulting projects.
+This module follows the [MokoStandards](https://github.com/mokoconsulting-tech/MokoStandards) structure for Moko Consulting projects.
 
 ---
 

@@ -80,4 +80,4 @@ The MokoDoliChimp module follows the MokoStandards structure:
 - `/scripts/` - Build and validation scripts
 - `/MokoStandards/` - MokoStandards submodule reference
 
-For more information about MokoStandards, see the [MokoStandards repository](https://github.com/mokoconsulting-tech/MokoCodingDefaults).
+For more information about MokoStandards, see the [MokoStandards repository](https://github.com/mokoconsulting-tech/MokoStandards).
