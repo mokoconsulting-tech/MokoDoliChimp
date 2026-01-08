@@ -1,0 +1,266 @@
+# Copyright (C) 2026 Moko Consulting <hello@mokoconsulting.tech>
+#
+# This file is part of a Moko Consulting project.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# FILE INFORMATION
+# DEFGROUP: GitHub.Workflow
+# INGROUP: MokoStandards.CI
+# REPO: https://github.com/mokoconsulting-tech/MokoStandards
+# PATH: /templates/workflows/dolibarr/ci.yml
+# VERSION: 01.00.00
+# BRIEF: Continuous integration workflow for Dolibarr modules
+# NOTE: Validates module structure, PHP syntax, and Dolibarr compatibility
+
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - dev/**
+      - rc/**
+      - version/**
+  pull_request:
+    branches:
+      - main
+      - dev/**
+      - rc/**
+      - version/**
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Module Validation
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2']
+        dolibarr-version: ['16.0', '17.0', '18.0']
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, mysqli, gd, curl, zip, intl
+          tools: composer:v2
+
+      - name: Validate module structure
+        run: |
+          echo "Validating Dolibarr module structure..."
+          
+          # Check for required module files in src/
+          if [ ! -f "src/core/modules/modMokoDoliChimp.class.php" ]; then
+            echo "Error: Module descriptor not found"
+            exit 1
+          fi
+          
+          # Validate directory structure
+          if [ ! -d "src/core" ]; then
+            echo "Error: src/core/ directory is required"
+            exit 1
+          fi
+          
+          if [ ! -d "src/admin" ]; then
+            echo "Error: src/admin/ directory is required"
+            exit 1
+          fi
+          
+          if [ ! -d "src/class" ]; then
+            echo "Error: src/class/ directory is required"
+            exit 1
+          fi
+
+      - name: PHP syntax validation
+        run: |
+          echo "Checking PHP syntax..."
+          find src/ -name "*.php" -exec php -l {} \; | grep -v "No syntax errors"
+
+      - name: Check Dolibarr API usage
+        run: |
+          echo "Checking for deprecated Dolibarr API usage..."
+          
+          # Check for old database syntax
+          if grep -r "->db->query" --include="*.php" src/; then
+            echo "Warning: Found deprecated ->db->query usage. Use ->db->select() instead"
+          fi
+          
+          # Check for proper permission checks
+          if ! grep -r "restrictedArea" --include="*.php" src/; then
+            echo "Warning: No permission checks found. Ensure proper restrictedArea() usage"
+          fi
+
+      - name: Validate module descriptor
+        run: |
+          if [ -f "src/core/modules/modMokoDoliChimp.class.php" ]; then
+            echo "Validating module descriptor..."
+            php -l src/core/modules/modMokoDoliChimp.class.php
+            echo "Module descriptor syntax validated"
+          fi
+
+      - name: Check database schema
+        run: |
+          if [ -d "src/sql" ]; then
+            echo "Validating SQL files..."
+            for sql_file in src/sql/*.sql; do
+              if [ -f "$sql_file" ]; then
+                echo "Checking $sql_file..."
+                # Basic SQL syntax validation
+                grep -E "CREATE TABLE|ALTER TABLE|DROP TABLE" "$sql_file" || true
+              fi
+            done
+          else
+            echo "No SQL directory found (optional)"
+          fi
+
+      - name: License header validation
+        run: |
+          echo "Checking for GPL license headers..."
+          missing_headers=0
+          for file in $(find src/ -name "*.php"); do
+            if ! head -20 "$file" | grep -q "GPL"; then
+              echo "Missing GPL header: $file"
+              ((missing_headers++))
+            fi
+          done
+          
+          if [ $missing_headers -gt 0 ]; then
+            echo "Warning: $missing_headers files missing GPL headers"
+          fi
+
+      - name: Install dependencies
+        run: |
+          if [ -f "composer.json" ]; then
+            composer install --prefer-dist --no-progress
+          fi
+
+      - name: Run custom validation scripts
+        run: |
+          if [ -d "scripts/validate" ]; then
+            for script in scripts/validate/*.sh; do
+              if [ -f "$script" ] && [ -x "$script" ]; then
+                echo "Running $script..."
+                bash "$script"
+              fi
+            done
+          fi
+
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml
+          tools: composer:v2, phpcs, phpstan
+
+      - name: Install dependencies
+        run: |
+          if [ -f "composer.json" ]; then
+            composer install --prefer-dist --no-progress
+          fi
+
+      - name: PHP_CodeSniffer
+        run: |
+          if [ -f "phpcs.xml" ]; then
+            phpcs --standard=phpcs.xml --report=summary
+          else
+            echo "No phpcs.xml found, using PSR-12 standard"
+            phpcs --standard=PSR12 --extensions=php src/ || true
+          fi
+        continue-on-error: true
+
+      - name: PHPStan analysis
+        run: |
+          if [ -f "phpstan.neon" ]; then
+            phpstan analyse --no-progress
+          else
+            echo "No phpstan.neon found, using defaults"
+            phpstan analyse --level=5 src/core/ src/class/ || true
+          fi
+        continue-on-error: true
+
+  security:
+    name: Security Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for hardcoded credentials
+        run: |
+          echo "Scanning for potential hardcoded credentials..."
+          
+          # Check for common patterns
+          if grep -rE "(password|passwd|pwd)\s*=\s*['\"][^'\"]+['\"]" --include="*.php" src/; then
+            echo "Warning: Potential hardcoded credentials found"
+          fi
+          
+          # Check for API keys
+          if grep -rE "(api_key|apikey|api-key)\s*=\s*['\"][^'\"]+['\"]" --include="*.php" src/; then
+            echo "Warning: Potential hardcoded API keys found"
+          fi
+
+      - name: SQL injection check
+        run: |
+          echo "Checking for potential SQL injection vulnerabilities..."
+          
+          # Check for direct variable usage in SQL
+          if grep -rE "\\\$_(GET|POST|REQUEST)\[.*\].*->db->" --include="*.php" src/; then
+            echo "Warning: Potential SQL injection risk - unsanitized user input in queries"
+          fi
+
+      - name: XSS vulnerability check
+        run: |
+          echo "Checking for XSS vulnerabilities..."
+          
+          # Check for unescaped output
+          if grep -rE "echo\s+\\\$_(GET|POST|REQUEST)" --include="*.php" src/; then
+            echo "Warning: Potential XSS risk - unescaped user input in output"
+          fi
+
+  summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [validate, code-quality, security]
+    if: always()
+    
+    steps:
+      - name: Generate summary
+        run: |
+          echo "### CI Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository: $GITHUB_REPOSITORY" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: $GITHUB_REF_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: $GITHUB_SHA" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All validation checks completed." >> $GITHUB_STEP_SUMMARY

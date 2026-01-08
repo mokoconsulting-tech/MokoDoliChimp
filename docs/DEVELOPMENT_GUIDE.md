@@ -113,14 +113,14 @@ ls -la MokoStandards/
 ls -la
 
 # Expected output should include:
-# - admin/          (Admin pages)
-# - class/          (Business logic)
-# - core/           (Module descriptor)
+# - src/            (Source code)
+#   - src/admin/    (Admin pages)
+#   - src/class/    (Business logic)
+#   - src/core/     (Module descriptor)
+#   - src/lang/     (Translations)
 # - docs/           (Documentation)
-# - lang/           (Translations)
 # - scripts/        (Build scripts)
 # - Makefile        (Build automation)
-# - mokodolichimp.php (Main file)
 ```
 
 ### Step 3: Validate Installation
@@ -222,13 +222,13 @@ Use your favorite editor to modify files:
 
 ```bash
 # Example: Edit the main module file
-code mokodolichimp.php
+code src/mokodolichimp.php
 
 # Or edit a class file
-code class/mailchimpclient.class.php
+code src/class/mailchimpclient.class.php
 
 # Or edit the admin page
-code admin/setup.php
+code src/admin/setup.php
 ```
 
 **B. Validate Changes Locally**
@@ -254,13 +254,13 @@ make dev-sync
 
 # Expected output:
 # Syncing changes to /var/www/html/dolibarr/htdocs/custom/mokodolichimp...
-# Syncing files (excluding development artifacts)...
+# Syncing files from src/ (excluding development artifacts)...
 # sending incremental file list
 # mokodolichimp.php
 # class/mailchimpclient.class.php
 # 
 # ✓ Files synced successfully
-# Synced from: /home/user/projects/MokoDoliChimp
+# Synced from: /home/user/projects/MokoDoliChimp/src/
 # Synced to:   /var/www/html/dolibarr/htdocs/custom/mokodolichimp
 ```
 
@@ -304,11 +304,11 @@ After testing and verifying your changes work:
 git status
 
 # View specific changes
-git diff mokodolichimp.php
+git diff src/mokodolichimp.php
 
 # Stage your changes
-git add mokodolichimp.php
-git add class/mailchimpclient.class.php
+git add src/mokodolichimp.php
+git add src/class/mailchimpclient.class.php
 
 # Commit with descriptive message
 git commit -m "feat: add new feature to sync contacts"
@@ -668,12 +668,12 @@ make help
 
 ### Key Files to Edit
 
-- **Main module file:** `mokodolichimp.php`
-- **Module descriptor:** `core/modules/modMokoDoliChimp.class.php`
-- **Mailchimp client:** `class/mailchimpclient.class.php`
-- **Hook actions:** `class/actions_mokodolichimp.class.php`
-- **Admin setup page:** `admin/setup.php`
-- **Translations:** `lang/en_US/mokodolichimp.lang`
+- **Main module file:** `src/mokodolichimp.php`
+- **Module descriptor:** `src/core/modules/modMokoDoliChimp.class.php`
+- **Mailchimp client:** `src/class/mailchimpclient.class.php`
+- **Hook actions:** `src/class/actions_mokodolichimp.class.php`
+- **Admin setup page:** `src/admin/setup.php`
+- **Translations:** `src/lang/en_US/mokodolichimp.lang`
 
 ---
 

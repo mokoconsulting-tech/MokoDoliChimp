@@ -199,23 +199,25 @@ When auto-sync is enabled, contacts and users are automatically synced to Mailch
 
 ```plaintext
 mokodolichimp/
-├── admin/                      # Admin configuration pages
-│   └── setup.php              # Module setup page
-├── class/                      # Business logic classes
-│   ├── actions_mokodolichimp.class.php  # Hook handlers
-│   └── mailchimpclient.class.php        # Mailchimp API client
-├── core/                       # Core module files
-│   └── modules/
-│       └── modMokoDoliChimp.class.php   # Module descriptor
+├── src/                        # Source code
+│   ├── admin/                  # Admin configuration pages
+│   │   └── setup.php          # Module setup page
+│   ├── class/                  # Business logic classes
+│   │   ├── actions_mokodolichimp.class.php  # Hook handlers
+│   │   └── mailchimpclient.class.php        # Mailchimp API client
+│   ├── core/                   # Core module files
+│   │   └── modules/
+│   │       └── modMokoDoliChimp.class.php   # Module descriptor
+│   ├── lang/                   # Language files
+│   │   └── en_US/
+│   │       └── mokodolichimp.lang  # English translations
+│   └── mokodolichimp.php      # Module main page
 ├── docs/                       # Documentation
+│   ├── DEVELOPMENT_GUIDE.md   # Development workflow guide
 │   └── index.md               # Documentation index
-├── lang/                       # Language files
-│   └── en_US/
-│       └── mokodolichimp.lang  # English translations
 ├── scripts/                    # Build and validation scripts
 │   └── index.md               # Scripts directory index
 ├── MokoStandards/             # MokoStandards submodule (coding standards)
-├── mokodolichimp.php          # Module main page
 ├── LICENSE                     # GPL-3.0-or-later license
 └── README.md                   # This file
 ```

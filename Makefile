@@ -43,8 +43,8 @@ BUILD_DIR = build
 DIST_DIR = dist
 
 # Files and directories to include in distribution
-DIST_FILES = admin class core lang docs scripts \
-	mokodolichimp.php \
+DIST_FILES = src/admin src/class src/core src/lang docs scripts \
+	src/mokodolichimp.php \
 	LICENSE README.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md
 
 # Exclusion patterns for installation
@@ -91,11 +91,11 @@ check: ## Check PHP syntax for all PHP files
 .PHONY: validate
 validate: check ## Validate module structure and requirements
 	@echo "$(COLOR_BOLD)Validating module structure...$(COLOR_RESET)"
-	@test -f core/modules/modMokoDoliChimp.class.php || (echo "$(COLOR_YELLOW)Missing module descriptor$(COLOR_RESET)" && exit 1)
-	@test -f mokodolichimp.php || (echo "$(COLOR_YELLOW)Missing main module file$(COLOR_RESET)" && exit 1)
-	@test -d admin || (echo "$(COLOR_YELLOW)Missing admin directory$(COLOR_RESET)" && exit 1)
-	@test -d class || (echo "$(COLOR_YELLOW)Missing class directory$(COLOR_RESET)" && exit 1)
-	@test -d lang || (echo "$(COLOR_YELLOW)Missing lang directory$(COLOR_RESET)" && exit 1)
+	@test -f src/core/modules/modMokoDoliChimp.class.php || (echo "$(COLOR_YELLOW)Missing module descriptor$(COLOR_RESET)" && exit 1)
+	@test -f src/mokodolichimp.php || (echo "$(COLOR_YELLOW)Missing main module file$(COLOR_RESET)" && exit 1)
+	@test -d src/admin || (echo "$(COLOR_YELLOW)Missing admin directory$(COLOR_RESET)" && exit 1)
+	@test -d src/class || (echo "$(COLOR_YELLOW)Missing class directory$(COLOR_RESET)" && exit 1)
+	@test -d src/lang || (echo "$(COLOR_YELLOW)Missing lang directory$(COLOR_RESET)" && exit 1)
 	@echo "$(COLOR_GREEN)✓ Module structure validated$(COLOR_RESET)"
 
 .PHONY: clean
@@ -112,11 +112,20 @@ build: clean validate ## Build distribution package
 	@mkdir -p $(DIST_DIR)
 	@mkdir -p $(BUILD_DIR)/$(MODULE_NAME)
 	@echo "Copying files..."
-	@for item in $(DIST_FILES); do \
-		if [ -e $$item ]; then \
-			cp -r $$item $(BUILD_DIR)/$(MODULE_NAME)/; \
-		fi; \
-	done
+	@# Copy source files from src/ to root of build
+	@cp -r src/admin $(BUILD_DIR)/$(MODULE_NAME)/
+	@cp -r src/class $(BUILD_DIR)/$(MODULE_NAME)/
+	@cp -r src/core $(BUILD_DIR)/$(MODULE_NAME)/
+	@cp -r src/lang $(BUILD_DIR)/$(MODULE_NAME)/
+	@cp src/mokodolichimp.php $(BUILD_DIR)/$(MODULE_NAME)/
+	@# Copy documentation and support files
+	@if [ -d docs ]; then cp -r docs $(BUILD_DIR)/$(MODULE_NAME)/; fi
+	@if [ -d scripts ]; then cp -r scripts $(BUILD_DIR)/$(MODULE_NAME)/; fi
+	@if [ -f LICENSE ]; then cp LICENSE $(BUILD_DIR)/$(MODULE_NAME)/; fi
+	@if [ -f README.md ]; then cp README.md $(BUILD_DIR)/$(MODULE_NAME)/; fi
+	@if [ -f CHANGELOG.md ]; then cp CHANGELOG.md $(BUILD_DIR)/$(MODULE_NAME)/; fi
+	@if [ -f CONTRIBUTING.md ]; then cp CONTRIBUTING.md $(BUILD_DIR)/$(MODULE_NAME)/; fi
+	@if [ -f CODE_OF_CONDUCT.md ]; then cp CODE_OF_CONDUCT.md $(BUILD_DIR)/$(MODULE_NAME)/; fi
 	@echo "Creating archive..."
 	@cd $(BUILD_DIR) && zip -r ../$(DIST_DIR)/$(MODULE_NAME)-$(MODULE_VERSION).zip $(MODULE_NAME)
 	@echo "$(COLOR_GREEN)✓ Build completed: $(DIST_DIR)/$(MODULE_NAME)-$(MODULE_VERSION).zip$(COLOR_RESET)"
@@ -130,9 +139,18 @@ install: validate ## Install module to Dolibarr (requires permissions)
 		exit 1; \
 	fi
 	@mkdir -p $(CUSTOM_PATH)
-	@echo "Copying module files..."
-	@rsync -av $(EXCLUDE_PATTERNS) \
-		./ $(MODULE_PATH)/
+	@echo "Copying module files from src/..."
+	@mkdir -p $(MODULE_PATH)
+	@rsync -av src/admin/ $(MODULE_PATH)/admin/
+	@rsync -av src/class/ $(MODULE_PATH)/class/
+	@rsync -av src/core/ $(MODULE_PATH)/core/
+	@rsync -av src/lang/ $(MODULE_PATH)/lang/
+	@cp src/mokodolichimp.php $(MODULE_PATH)/
+	@if [ -d docs ]; then rsync -av docs/ $(MODULE_PATH)/docs/; fi
+	@if [ -d scripts ]; then rsync -av scripts/ $(MODULE_PATH)/scripts/; fi
+	@if [ -f LICENSE ]; then cp LICENSE $(MODULE_PATH)/; fi
+	@if [ -f README.md ]; then cp README.md $(MODULE_PATH)/; fi
+	@if [ -f CHANGELOG.md ]; then cp CHANGELOG.md $(MODULE_PATH)/; fi
 	@echo "Setting permissions..."
 	@chmod -R 755 $(MODULE_PATH)
 	@if command -v chown >/dev/null 2>&1 && [ -n "$(WEB_USER)" ]; then \
@@ -172,9 +190,9 @@ dev-install: ## Create symlink for development (requires permissions)
 		echo "$(COLOR_YELLOW)Removing existing installation...$(COLOR_RESET)"; \
 		rm -rf $(MODULE_PATH); \
 	fi
-	@ln -s $(PWD) $(MODULE_PATH)
+	@ln -s $(PWD)/src $(MODULE_PATH)
 	@echo "$(COLOR_GREEN)✓ Development symlink created$(COLOR_RESET)"
-	@echo "$(COLOR_YELLOW)Note: Changes in this directory will be immediately reflected in Dolibarr$(COLOR_RESET)"
+	@echo "$(COLOR_YELLOW)Note: Changes in src/ directory will be immediately reflected in Dolibarr$(COLOR_RESET)"
 
 .PHONY: dev-sync
 dev-sync: ## Sync local changes to remote Dolibarr installation (for FTP workflows)
@@ -184,16 +202,20 @@ dev-sync: ## Sync local changes to remote Dolibarr installation (for FTP workflo
 		echo "Creating directory and performing initial sync..."; \
 		mkdir -p $(MODULE_PATH); \
 	fi
-	@echo "Syncing files (excluding development artifacts)..."
-	@rsync -av --delete $(EXCLUDE_PATTERNS) \
-		--exclude='Makefile' --exclude='.editorconfig' --exclude='.git*' \
-		./ $(MODULE_PATH)/
+	@echo "Syncing files from src/ (excluding development artifacts)..."
+	@rsync -av --delete src/admin/ $(MODULE_PATH)/admin/
+	@rsync -av --delete src/class/ $(MODULE_PATH)/class/
+	@rsync -av --delete src/core/ $(MODULE_PATH)/core/
+	@rsync -av --delete src/lang/ $(MODULE_PATH)/lang/
+	@rsync -av src/mokodolichimp.php $(MODULE_PATH)/
+	@if [ -d docs ]; then rsync -av --delete docs/ $(MODULE_PATH)/docs/; fi
+	@if [ -d scripts ]; then rsync -av --delete scripts/ $(MODULE_PATH)/scripts/; fi
 	@echo "$(COLOR_GREEN)✓ Files synced successfully$(COLOR_RESET)"
-	@echo "$(COLOR_BLUE)Synced from:$(COLOR_RESET) $(PWD)"
+	@echo "$(COLOR_BLUE)Synced from:$(COLOR_RESET) $(PWD)/src/"
 	@echo "$(COLOR_BLUE)Synced to:$(COLOR_RESET)   $(MODULE_PATH)"
 	@echo ""
 	@echo "$(COLOR_YELLOW)Note: For FTP-based development:$(COLOR_RESET)"
-	@echo "  1. Edit files locally in this directory"
+	@echo "  1. Edit files locally in the src/ directory"
 	@echo "  2. Run 'make dev-sync' to sync changes to Dolibarr"
 	@echo "  3. Test changes in Dolibarr"
 	@echo "  4. Repeat as needed"
