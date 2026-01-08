@@ -179,8 +179,9 @@ jobs:
       - name: Install module
         run: |
           MODULE_NAME=$(basename $(pwd))
-          mkdir -p dolibarr/htdocs/custom/
-          cp -r . dolibarr/htdocs/custom/$MODULE_NAME
+          mkdir -p dolibarr/htdocs/custom/$MODULE_NAME
+          # Copy source files from src/ directory to dolibarr custom directory
+          cp -r src/* dolibarr/htdocs/custom/$MODULE_NAME/
 
       - name: Run integration tests
         run: |
