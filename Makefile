@@ -48,7 +48,7 @@ DIST_FILES = src/admin src/class src/core src/lang docs scripts \
 	LICENSE README.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md
 
 # Exclusion patterns for installation
-EXCLUDE_PATTERNS = --exclude='.git*' --exclude='MokoStandards' --exclude='$(BUILD_DIR)' \
+EXCLUDE_PATTERNS = --exclude='.git*' --exclude='$(BUILD_DIR)' \
 	--exclude='$(DIST_DIR)' --exclude='Makefile' --exclude='*.md'
 
 # Colors for output
@@ -75,7 +75,7 @@ help: ## Show this help message
 check: ## Check PHP syntax for all PHP files
 	@echo "$(COLOR_BOLD)Checking PHP syntax...$(COLOR_RESET)"
 	@errors=0; \
-	for file in $$(find . -name "*.php" ! -path "./MokoStandards/*" ! -path "./.git/*" ! -path "./$(BUILD_DIR)/*"); do \
+	for file in $$(find . -name "*.php" ! -path "./.git/*" ! -path "./$(BUILD_DIR)/*"); do \
 		if ! php -l "$$file" > /dev/null 2>&1; then \
 			php -l "$$file"; \
 			errors=$$((errors + 1)); \

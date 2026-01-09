@@ -55,8 +55,8 @@ For detailed step-by-step instructions on setting up your development environmen
 
 Quick start:
 ```bash
-# Clone with submodules
-git clone --recurse-submodules https://github.com/mokoconsulting-tech/MokoDoliChimp.git
+# Clone the repository
+git clone https://github.com/mokoconsulting-tech/MokoDoliChimp.git
 
 # Set your Dolibarr path
 export DOLIBARR_PATH=/var/www/html/dolibarr
@@ -79,6 +79,5 @@ The MokoDoliChimp module follows the MokoStandards structure:
   - `/src/lang/` - Translation files
 - `/docs/` - Documentation (this directory)
 - `/scripts/` - Build and validation scripts
-- `/MokoStandards/` - MokoStandards submodule reference
 
 For more information about MokoStandards, see the [MokoStandards repository](https://github.com/mokoconsulting-tech/MokoStandards).

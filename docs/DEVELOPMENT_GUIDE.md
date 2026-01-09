@@ -92,18 +92,10 @@ Clone the repository with submodules:
 cd ~/projects
 
 # Clone with submodules
-git clone --recurse-submodules https://github.com/mokoconsulting-tech/MokoDoliChimp.git
+git clone https://github.com/mokoconsulting-tech/MokoDoliChimp.git
 
 # Navigate to project directory
 cd MokoDoliChimp
-```
-
-**Verification:**
-```bash
-# Check that MokoStandards submodule is present
-ls -la MokoStandards/
-
-# Should show MokoStandards files and folders
 ```
 
 ### Step 2: Verify Project Structure
@@ -283,14 +275,13 @@ Continue the cycle: Edit → Check → Sync → Test
 The `make dev-sync` command:
 
 - **Syncs all module files** from your local directory to server
-- **Excludes development files** (.git, MokoStandards, build artifacts, etc.)
+- **Excludes development files** (.git, build artifacts, etc.)
 - **Uses rsync with --delete** to mirror your local changes exactly
 - **Creates directory** if it doesn't exist on server
 - **Preserves permissions** on the server
 
 **Files that are excluded from sync:**
 - `.git/` and `.gitignore`
-- `MokoStandards/` submodule
 - `build/` and `dist/` directories
 - `Makefile`
 - `.editorconfig`
@@ -567,18 +558,6 @@ make check
 make dev-sync
 ```
 
-### Issue: Submodule Not Initialized
-
-**Solution:** Initialize submodules
-
-```bash
-# Initialize and update submodules
-git submodule update --init --recursive
-
-# Verify
-ls -la MokoStandards/
-```
-
 ---
 
 ## Best Practices
@@ -680,7 +659,7 @@ make help
 ## Getting Help
 
 - **Issues:** https://github.com/mokoconsulting-tech/MokoDoliChimp/issues
-- **MokoStandards:** Check `MokoStandards/` submodule for coding standards
+- **MokoStandards:** https://github.com/mokoconsulting-tech/MokoStandards
 - **Dolibarr Wiki:** https://wiki.dolibarr.org/
 
 ---
