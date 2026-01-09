@@ -1,0 +1,52 @@
+# Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
+#
+# This file is part of a Moko Consulting project.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# FILE INFORMATION
+# DEFGROUP: GitHub.Configuration
+# INGROUP: MokoStandards.Governance
+# REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+# PATH: /.github/CODEOWNERS
+# VERSION: 01.00.00
+# BRIEF: Code ownership and review requirements
+# NOTE: Defines who must review changes to specific files or directories
+
+# Default owners for everything in the repository
+# These owners will be requested for review when someone opens a pull request
+*       @mokoconsulting-tech/maintainers
+
+# Documentation
+*.md    @mokoconsulting-tech/maintainers
+/docs/  @mokoconsulting-tech/maintainers
+
+# Configuration files
+/.github/           @mokoconsulting-tech/maintainers
+/.editorconfig      @mokoconsulting-tech/maintainers
+/.gitignore         @mokoconsulting-tech/maintainers
+/.gitattributes     @mokoconsulting-tech/maintainers
+
+# Security-related files
+/SECURITY.md        @mokoconsulting-tech/maintainers
+/LICENSE            @mokoconsulting-tech/maintainers
+
+# Build and deployment
+/Makefile           @mokoconsulting-tech/maintainers
+/scripts/           @mokoconsulting-tech/maintainers
+
+# Source code
+/src/               @mokoconsulting-tech/maintainers

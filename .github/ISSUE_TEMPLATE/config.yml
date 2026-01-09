@@ -1,3 +1,18 @@
+# Copyright (C) 2025 Moko Consulting <hello@mokoconsulting.tech>
+#
+# This file is part of a Moko Consulting project.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# FILE INFORMATION
+# DEFGROUP: GitHub.Template
+# INGROUP: MokoStandards.GitHub
+# REPO: https://github.com/mokoconsulting-tech/MokoDoliChimp
+# FILE: config.yml
+# VERSION: 01.00.00
+# BRIEF: Issue template configuration
+# PATH: /.github/ISSUE_TEMPLATE/config.yml
+
 blank_issues_enabled: false
 contact_links:
   - name: Security vulnerability
