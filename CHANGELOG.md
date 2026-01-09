@@ -37,6 +37,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- SECURITY.md with comprehensive security policy and vulnerability reporting guidelines
+- Dependabot configuration (.github/dependabot.yml) for automated dependency updates
+- CODEOWNERS file for repository governance and review requirements
+- Blank index.php files in all directories to prevent directory listing
+- .htaccess files in src/ directories to prevent unauthorized direct access
+- Copyright and FILE INFORMATION headers to all GitHub templates
 - Makefile for automated build and deployment
   - `make install` - Install module to Dolibarr
   - `make build` - Create distribution package
@@ -60,6 +66,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated folder structure documentation
 - Enhanced README with multiple installation methods and development workflows
 - Updated docs/index.md with link to development guide
+- Enhanced GitHub templates with proper copyright headers following MokoStandards
+
+### Security
+- Implemented directory listing protection with index.php files
+- Added Apache .htaccess rules to prevent direct file access
+- Configured Dependabot for automated security updates
+- Verified no hardcoded credentials in source code
 
 ## [1.0.0] - 2025-01-05
 ### Added
