@@ -44,5 +44,3 @@ Scripts that may be added here include:
 - Build scripts for packaging
 - Deployment utilities
 - Test automation scripts
-
-For reference scripts and templates, see the [MokoStandards scripts templates](../MokoStandards/templates/scripts/).
